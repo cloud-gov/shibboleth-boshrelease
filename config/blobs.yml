@@ -1,0 +1,13 @@
+---
+apache-tomcat/apache-tomcat-7.0.61.tar.gz:
+  object_id: 3c1ab234-e87b-422c-9026-b00366faaa08
+  sha: 98ccbc95d029291e81bf818879ec8a0aa14465df
+  size: 8816567
+java8/openjdk-1.8.0_91.tar.gz:
+  object_id: 3eb3dc5c-fd91-4d00-a5fa-211e24cea7d2
+  sha: 63ff487f3004729d33796e87919c183fa8a4e752
+  size: 45736783
+shibboleth3/shibboleth-identity-provider-3.2.1.tar.gz:
+  object_id: 522d7331-92ff-4f72-903d-fc716bfc8a69
+  sha: 08cd5a13651f1c61ce35b88e9af4e0c5134c55c3
+  size: 39507368

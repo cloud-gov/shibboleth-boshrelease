@@ -1,0 +1,84 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Setup env vars and folders for the webapp_ctl script
+source /var/vcap/jobs/idp/helpers/ctl_setup.sh 'idp'
+
+export PORT=${PORT:-5000}
+export LANG=en_US.UTF-8
+
+DATA_DIR=/var/vcap/data/idp
+
+if [[ -f /var/vcap/jobs/idp/config/cacerts ]]; then
+    export KEYSTORE="/var/vcap/jobs/idp/config/cacerts"
+else
+    export KEYSTORE="/var/vcap/packages/idp/jre/lib/security/cacerts"
+fi
+
+export KEYSTORE_OPTS="-Djavax.net.ssl.trustStore=$KEYSTORE -Djavax.net.ssl.trustStoreType=JKS"
+
+ensure_no_more_tomcat() {
+    for java_pid in $(ps -ef |grep java| grep tomcat |grep -Po '\-DPID=\K[^ ]+'); do
+      echo "[kill-tomcat] Found leftover Java process - killing `ps -fp $java_pid`"
+      kill -9 $java_pid
+    done
+}
+
+case $1 in
+
+  start)
+    if pid_guard $PIDFILE $JOB_NAME
+    then
+      echo "[idp-start] idp not running - proceeding with startup"
+    else
+      echo "[idp-check] idp already running - check successful...."
+      exit 0
+    fi
+
+    ensure_no_more_tomcat
+
+    # We want to keep packages pristine, since tomcat and shibboleth is modified in place we stage them elsewhere.
+    rm -rf $DATA_DIR
+    mkdir -p $DATA_DIR
+    cp -a /var/vcap/packages/idp/tomcat $DATA_DIR
+    cp -a /var/vcap/jobs/idp/config/tomcat/* $DATA_DIR/tomcat/conf/
+
+    cp -a /var/vcap/packages/idp/idp $DATA_DIR
+    # cp -a /var/vcap/jobs/idp/shibboleth/* $DATA_DIR/idp/
+
+    export JAVA_DEFINES="-DPID=$$ -Didp.home=${DATA_DIR}/idp -Dsun.net.inetaddr.ttl=60 -Dnetworkaddress.cache.ttl=60"
+    export JAVA_OPTS="$JAVA_DEFINES $KEYSTORE_OPTS"
+    export CATALINA_OPTS="<%= p('idp.catalina_opts') %>"
+
+    chown -R vcap:vcap $DATA_DIR
+
+    # Install the server's ssl certificate
+    <% if p("idp.ssl.port") != -1 %>
+        /var/vcap/jobs/idp/bin/install_idp_crt idp.crt
+    <% end %>
+
+    # store pid in $PIDFILE
+    echo $$ > $PIDFILE
+    chown vcap:vcap $PIDFILE
+
+    cd /var/vcap/data/idp
+    exec chpst -u vcap:vcap tomcat/bin/catalina.sh run \
+         >>$LOG_DIR/$JOB_NAME.stdout.log \
+         2>>$LOG_DIR/$JOB_NAME.stderr.log
+
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE
+    ensure_no_more_tomcat
+
+    ;;
+  *)
+    echo "Usage: idp_ctl {start|stop}"
+
+    ;;
+
+esac
+exit 0

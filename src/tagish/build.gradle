@@ -1,0 +1,33 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    // For encryption
+    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '4.1.2.RELEASE'
+
+    // For database connections
+    runtime group: 'org.postgresql', name: 'postgresql', version: '9.4.1209'
+    runtime group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '1.5.2'
+    runtime group: 'mysql', name: 'mysql-connector-java', version: '6.0.3'
+
+    testCompile 'junit:junit:4.12'
+}
+
+// Copy our dependencies into build dir
+task copyDeps(type: Copy) {
+  from configurations.runtime
+  into 'build/libs'
+}
+
+compileJava.dependsOn copyDeps
+
+jar {
+    baseName = 'tagish'
+    version =  '0.1.0'
+}

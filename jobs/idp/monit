@@ -1,0 +1,5 @@
+check process idp
+  with pidfile /var/vcap/sys/run/idp/idp.pid
+  start program "/var/vcap/jobs/idp/bin/monit_debugger idp_ctl '/var/vcap/jobs/idp/bin/ctl start'"
+  stop program "/var/vcap/jobs/idp/bin/monit_debugger idp_ctl '/var/vcap/jobs/idp/bin/ctl stop'"
+  group vcap

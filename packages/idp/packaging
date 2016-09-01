@@ -1,0 +1,70 @@
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Available variables
+# $BOSH_COMPILE_TARGET - where this package & spec'd source files are available
+# $BOSH_INSTALL_TARGET - where you copy/install files to be included in package
+
+OPENJDK_VERSION="1.8.0_91"
+
+if [[ `uname -a` =~ "x86_64" ]] ; then
+  archive="java8/openjdk-${OPENJDK_VERSION}.tar.gz"
+else
+  echo "Only 64-bit architectures are supported."
+  exit 1
+fi
+
+if [[ -f $archive ]] ; then
+  echo "Archive found"
+else
+  echo "Archive not found"
+  exit 1
+fi
+
+echo "Extracting java archive..."
+mkdir jre
+tar xzf $archive -C jre
+
+if [[ -d jre/bin && `jre/bin/java -version 2>&1` =~ "OpenJDK Runtime Environment" && $? == 0 ]]; then
+  cp -a jre ${BOSH_INSTALL_TARGET}
+else
+  echo "JVM is not properly packaged"
+  exit 1
+fi
+export JAVA_HOME="${BOSH_INSTALL_TARGET}/jre"
+
+
+echo "Extracting tomcat archive..."
+tar zxvf apache-tomcat/apache-tomcat-7.0.61.tar.gz
+if [[ $? != 0 ]] ; then
+  echo "Cannot unpack Tomcat"
+  exit 1
+fi
+mv apache-tomcat-7.0.61 tomcat
+rm -rf tomcat/webapps/*
+cp -a tomcat ${BOSH_INSTALL_TARGET}
+
+echo "Installing tagish jar..."
+mkdir -p ${BOSH_INSTALL_TARGET}/idp/edit-webapp/WEB-INF/lib
+pushd tagish
+./gradlew build
+cp -a build/libs/*.jar ${BOSH_INSTALL_TARGET}/idp/edit-webapp/WEB-INF/lib
+popd
+
+echo "Installing shibboleth..."
+tar zxvf shibboleth3/shibboleth-identity-provider-3.2.1.tar.gz
+pushd shibboleth-identity-provider-3.2.1
+mkdir -p ${BOSH_INSTALL_TARGET}/idp
+# Do a temporary install for packaging. We'll configure for real in job
+./bin/install.sh -Didp.src.dir=. \
+    -Didp.target.dir=${BOSH_INSTALL_TARGET}/idp \
+    -Didp.host.name=localhost.localdomain \
+    -Dentityid=https://localhost.localdomain/shibboleth \
+    -Didp.scope=localdomain \
+    -Didp.keystore.password=password \
+    -Didp.sealer.password=password
+popd
+cp -a ${BOSH_INSTALL_TARGET}/idp/war/idp.war ${BOSH_INSTALL_TARGET}/tomcat/webapps/ROOT.war
+
+echo "Resetting permissions..."
+chown -R vcap:vcap ${BOSH_INSTALL_TARGET}/idp
