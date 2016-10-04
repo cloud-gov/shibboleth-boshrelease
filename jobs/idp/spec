@@ -17,6 +17,8 @@ templates:
   config/idp.crt.erb: config/idp.crt
   config/shibboleth/idp.properties: config/shibboleth/idp.properties
   config/shibboleth/services.properties: config/shibboleth/services.properties
+  config/shibboleth/credentials.xml: config/shibboleth/credentials.xml
+  config/shibboleth/relying-party.xml: config/shibboleth/relying-party.xml
   config/shibboleth/saml-nameid.xml: config/shibboleth/saml-nameid.xml
   config/shibboleth/services.xml: config/shibboleth/services.xml
 
