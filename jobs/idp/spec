@@ -5,15 +5,20 @@ packages:
 - idp
 
 templates:
+  bin/pre-start: bin/pre-start
   bin/ctl: bin/ctl
   bin/monit_debugger: bin/monit_debugger
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
-  tomcat.logging.properties: config/tomcat/logging.properties
-  tomcat.server.xml.erb: config/tomcat/server.xml
+  config/tomcat/logging.properties: config/tomcat/logging.properties
+  config/tomcat/server.xml.erb: config/tomcat/server.xml
   bin/install_idp_crt: bin/install_idp_crt
-  idp.crt.erb: config/idp.crt
+  config/idp.crt.erb: config/idp.crt
+  config/shibboleth/idp.properties: config/shibboleth/idp.properties
+  config/shibboleth/services.properties: config/shibboleth/services.properties
+  config/shibboleth/saml-nameid.xml: config/shibboleth/saml-nameid.xml
+  config/shibboleth/services.xml: config/shibboleth/services.xml
 
 properties:
   # General server properties
@@ -81,3 +86,14 @@ properties:
       oyCimvs0CgUOknhTmJJSkwJBAPaI298JxTnWncC3Zu7d5QYCJXjU403Aj4LdcVeI
       6A15MzQdj5Hm82vlmpC4LzXofLjiN4E5ZLluzEw+1TjRE7c=
       -----END RSA PRIVATE KEY-----
+
+  idp.entityID:
+    description: "Globally unique name for the SAML entity"
+  idp.scope:
+    description: "The scope to assign to attribute encoded values, typically a domain name"
+  idp.passwords.sealer:
+    description: "Password for the cookie sealer"
+  idp.authn.flows:
+    description: "Regular expression matching login flows to enable"
+    example: IPAddress|Password
+    default: Password

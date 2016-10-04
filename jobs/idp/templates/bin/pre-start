@@ -1,0 +1,37 @@
+#!/bin/bash
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+if [[ -d /var/vcap/packages/idp/jre ]]
+then
+  export JAVA_HOME="/var/vcap/packages/idp/jre"
+fi
+
+DATA_DIR=/var/vcap/data/idp
+
+# We want to keep packages pristine, since tomcat and shibboleth is modified in place we stage them elsewhere.
+rm -rf $DATA_DIR
+mkdir -p $DATA_DIR
+cp -a /var/vcap/packages/idp/tomcat $DATA_DIR
+cp -a /var/vcap/jobs/idp/config/tomcat/* $DATA_DIR/tomcat/conf/
+
+cp -a /var/vcap/packages/idp/idp $DATA_DIR
+cp -a /var/vcap/jobs/idp/config/shibboleth/* $DATA_DIR/idp/conf
+
+# Install the server's ssl certificate
+<% if p("idp.ssl.port") != -1 %>
+    /var/vcap/jobs/idp/bin/install_idp_crt idp.crt
+<% end %>
+
+# Regenerate the sealer key store with proper password
+IDP_HOME=$DATA_DIR/idp
+pushd $IDP_HOME
+rm -f $IDP_HOME/credentials/sealer.jks
+./bin/seckeygen.sh \
+    --storefile $IDP_HOME/credentials/sealer.jks \
+    --storepass <%= p('idp.passwords.sealer') %> \
+    --versionfile $IDP_HOME/credentials/sealer.kver \
+    --alias secret
+popd
+
+chown -R vcap:vcap $DATA_DIR
