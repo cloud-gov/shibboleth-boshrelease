@@ -18,6 +18,7 @@ templates:
   config/shibboleth/idp.properties: config/shibboleth/idp.properties
   config/shibboleth/services.properties: config/shibboleth/services.properties
   config/shibboleth/credentials.xml: config/shibboleth/credentials.xml
+  config/shibboleth/metadata-providers.xml.erb: config/shibboleth/metadata-providers.xml
   config/shibboleth/relying-party.xml: config/shibboleth/relying-party.xml
   config/shibboleth/saml-nameid.xml: config/shibboleth/saml-nameid.xml
   config/shibboleth/services.xml: config/shibboleth/services.xml
@@ -99,3 +100,9 @@ properties:
     description: "Regular expression matching login flows to enable"
     example: IPAddress|Password
     default: Password
+  idp.metadata.providers:
+    description: "List of service providers this IdP will be serving, by id and metadata URL"
+    default: []
+    example:
+      - id: testshib
+        metadataURL: https://www.testshib.org/metadata/testshib-providers.xml

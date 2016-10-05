@@ -17,43 +17,17 @@ properties:
   idp:
     sslPrivateKey: |
       -----BEGIN RSA PRIVATE KEY-----
-      MIICXAIBAAKBgQC3Ttkg9jjiKHYmMMOHqSLPWQfIgi+dH/96b9iAQtqjCK9SWGdA
-      qoNz9i6CDxW/2miSR50dJTBLdTyyoKwJCNbS8vkp9oajYOAdMRROSFD5spgdp10p
-      JN3YOiHcGcrWRJowfQhTMBjp80sG22p+JciPtI5uu/NwbBzO3NaBiqfrswIDAQAB
-      AoGADWAVe9A7ilUFeffo7Ics4RBP/xNwwfhJvfdXRtSZ+3dww4Nr1U4b1WRLNHZB
-      UgRvyOyszCmggoEFcstCgk5AznfqgzlkE7n1xaS52eLV8c5nzZe/vE5yaLzBW6Fc
-      odDMr3EiLfJobMhVbCpiMZcmJKp7BdY7i9Htg7eCLIWn+LECQQDs/Bxj1DxS4UrM
-      Tmx6I2L0ELIgsizus8zZrhfMEP/oWA6fleTBnWP3/Vbgs4UsMuIBiV9LSBcdReMj
-      MH+aHoRNAkEAxgQqYSlnDXyl7wZpUSGrfypgvHO8LM+dkc44AXq2DmSYZjF9fypN
-      TU6EabmmkVCFur7OfVYeqatBigJMd9gv/wJBAKbGkZArpzxIcmQveKXHy3apXUIn
-      QfnGrQ4wN20UNZQkjD4AtdkP02+NaRt/GuRM9sJQE7EeDa47Jar5EYO7oC0CQEpZ
-      QAxRPldLCQaxUpPa34iUwdOgZPQyVAht9Ithpr/Kt4oPZP59RJ8VLxR/V3JSWJPg
-      lqlqz4KHQcluyYVqD8MCQEP84pxmiv71+0ki/w7QWnAwmSIERGIqek3l4iX9Oap5
-      iWbdISJVHVLnudfbl+BVJhZVfnQG/xGiBnksnpTB5N4=
+      MY PRIVATE KEY
       -----END RSA PRIVATE KEY-----
     sslCertificate: |
       -----BEGIN CERTIFICATE-----
-      MIIDhDCCAu2gAwIBAgIJAP9ZWx26hkVAMA0GCSqGSIb3DQEBCwUAMIGJMQswCQYD
-      VQQGEwJVUzELMAkGA1UECBMCREMxEzARBgNVBAcTCldhc2hpbmd0b24xDDAKBgNV
-      BAoTAzE4RjESMBAGA1UECxMJY2xvdWQuZ292MQwwCgYDVQQDEwNpZHAxKDAmBgkq
-      hkiG9w0BCQEWGWNsb3VkLWdvdi1zdXBwb3J0QGdzYS5nb3YwHhcNMTYwODI5MjA0
-      MTEzWhcNMTcwODI5MjA0MTEzWjCBiTELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkRD
-      MRMwEQYDVQQHEwpXYXNoaW5ndG9uMQwwCgYDVQQKEwMxOEYxEjAQBgNVBAsTCWNs
-      b3VkLmdvdjEMMAoGA1UEAxMDaWRwMSgwJgYJKoZIhvcNAQkBFhljbG91ZC1nb3Yt
-      c3VwcG9ydEBnc2EuZ292MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3Ttkg
-      9jjiKHYmMMOHqSLPWQfIgi+dH/96b9iAQtqjCK9SWGdAqoNz9i6CDxW/2miSR50d
-      JTBLdTyyoKwJCNbS8vkp9oajYOAdMRROSFD5spgdp10pJN3YOiHcGcrWRJowfQhT
-      MBjp80sG22p+JciPtI5uu/NwbBzO3NaBiqfrswIDAQABo4HxMIHuMB0GA1UdDgQW
-      BBTLWAN0O3mo7OLSArjcn+XH/lH1lTCBvgYDVR0jBIG2MIGzgBTLWAN0O3mo7OLS
-      Arjcn+XH/lH1laGBj6SBjDCBiTELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkRDMRMw
-      EQYDVQQHEwpXYXNoaW5ndG9uMQwwCgYDVQQKEwMxOEYxEjAQBgNVBAsTCWNsb3Vk
-      LmdvdjEMMAoGA1UEAxMDaWRwMSgwJgYJKoZIhvcNAQkBFhljbG91ZC1nb3Ytc3Vw
-      cG9ydEBnc2EuZ292ggkA/1lbHbqGRUAwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0B
-      AQsFAAOBgQBgkg6JGAnNOqJWyb7dVO7Zpuz4e0kFfrqKPYKfgG3McokavF/OE/IP
-      y0Ybhjcyh0V2TQHZY7oRg9PXE/FUcdDfiIjLycT7n51akmkfaTVxZQsYlFz+Zopz
-      qHf++JYXZMCNBrRhIXLi2w5H6EwUpASyr8vPUUSq+HbbZ8iDigO3XQ==
+      MY CERT
       -----END CERTIFICATE-----
     entityID: https://localhost.localdomain
     scope: localdomain
     passwords:
       sealer: CHANGEME
+    metadata:
+      providers:
+      - id: testshib
+        metadataURL: https://www.testshib.org/metadata/testshib-providers.xml
