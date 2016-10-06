@@ -17,6 +17,7 @@ cp -a /var/vcap/jobs/idp/config/tomcat/* $DATA_DIR/tomcat/conf/
 
 cp -a /var/vcap/packages/idp/idp $DATA_DIR
 cp -a /var/vcap/jobs/idp/config/shibboleth/* $DATA_DIR/idp/conf
+cp -a /var/vcap/jobs/idp/credentials/* $DATA_DIR/idp/credentials
 
 # Install the server's ssl certificate
 <% if p("idp.ssl.port") != -1 %>

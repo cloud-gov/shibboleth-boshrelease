@@ -23,6 +23,15 @@ properties:
       -----BEGIN CERTIFICATE-----
       MY CERT
       -----END CERTIFICATE-----
+    signing:
+      key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MY PRIVATE SAML SIGNING KEY
+        -----END RSA PRIVATE KEY-----
+      cert: |
+        -----BEGIN CERTIFICATE-----
+        MY SAML SIGNING CERT
+        -----END CERTIFICATE-----
     entityID: https://localhost.localdomain
     scope: localdomain
     passwords:
