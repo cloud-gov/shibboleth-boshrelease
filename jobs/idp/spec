@@ -17,6 +17,8 @@ templates:
   config/idp.crt.erb: config/idp.crt
   config/shibboleth/idp.properties: config/shibboleth/idp.properties
   config/shibboleth/services.properties: config/shibboleth/services.properties
+  config/shibboleth/attribute-filter.xml: config/shibboleth/attribute-filter.xml
+  config/shibboleth/attribute-resolver.xml: config/shibboleth/attribute-resolver.xml
   config/shibboleth/credentials.xml: config/shibboleth/credentials.xml
   config/shibboleth/metadata-providers.xml.erb: config/shibboleth/metadata-providers.xml
   config/shibboleth/relying-party.xml: config/shibboleth/relying-party.xml
