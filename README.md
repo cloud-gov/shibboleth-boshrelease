@@ -69,11 +69,11 @@ properties:
     signing:
       key: |
         -----BEGIN RSA PRIVATE KEY-----
-        MY PRIVATE SAML SIGNING KEY
+        YOUR KEY HERE
         -----END RSA PRIVATE KEY-----
       cert: |
         -----BEGIN CERTIFICATE-----
-        MY SAML SIGNING CERT
+        YOUR CERT HERE
         -----END CERTIFICATE-----
 ```
 
