@@ -24,6 +24,11 @@ templates:
   config/shibboleth/relying-party.xml: config/shibboleth/relying-party.xml
   config/shibboleth/saml-nameid.xml: config/shibboleth/saml-nameid.xml
   config/shibboleth/services.xml: config/shibboleth/services.xml
+  config/shibboleth/authn/jaas.config: config/shibboleth/authn/jaas.config
+  config/shibboleth/authn/jaas-authn-config.xml: config/shibboleth/authn/jaas-authn-config.xml
+  config/shibboleth/authn/password-authn-config.xml: config/shibboleth/authn/password-authn-config.xml
+  credentials/idp-signing.crt.erb: credentials/idp-signing.crt
+  credentials/idp-signing.key.erb: credentials/idp-signing.key
 
 properties:
   # General server properties
@@ -159,3 +164,25 @@ properties:
     example:
       - id: testshib
         metadataURL: https://www.testshib.org/metadata/testshib-providers.xml
+  idp.jaas.database.dbDriver:
+    description: "JDBC driver class to use for authentication"
+    default: "org.postgresql.Driver"
+  idp.jaas.database.dbURL:
+    description: "JDBC URL of the database to use for authentication"
+    example: "jdbc:postgresql://host/database"
+  idp.jaas.database.dbUser:
+    description: "Username for the authentication database"
+  idp.jaas.database.dbPassword:
+    description: "Password for the authentication database"
+  idp.jaas.database.userTable:
+    description: "Table used to store users for authenication"
+    default: "users"
+  idp.jaas.database.userColumn:
+    description: "Column for the username in the table"
+    default: "username"
+  idp.jaas.database.passColumn:
+    description: "Column for the password in the table"
+    default: "password"
+  idp.jaas.database.useBcrypt:
+    description: "Does the password column use BCrypt for password storage"
+    default: "true"
