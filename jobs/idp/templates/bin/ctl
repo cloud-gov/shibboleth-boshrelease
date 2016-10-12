@@ -39,31 +39,15 @@ case $1 in
 
     ensure_no_more_tomcat
 
-    # We want to keep packages pristine, since tomcat and shibboleth is modified in place we stage them elsewhere.
-    rm -rf $DATA_DIR
-    mkdir -p $DATA_DIR
-    cp -a /var/vcap/packages/idp/tomcat $DATA_DIR
-    cp -a /var/vcap/jobs/idp/config/tomcat/* $DATA_DIR/tomcat/conf/
-
-    cp -a /var/vcap/packages/idp/idp $DATA_DIR
-    # cp -a /var/vcap/jobs/idp/shibboleth/* $DATA_DIR/idp/
-
     export JAVA_DEFINES="-DPID=$$ -Didp.home=${DATA_DIR}/idp -Dsun.net.inetaddr.ttl=60 -Dnetworkaddress.cache.ttl=60"
     export JAVA_OPTS="$JAVA_DEFINES $KEYSTORE_OPTS"
     export CATALINA_OPTS="<%= p('idp.catalina_opts') %>"
-
-    chown -R vcap:vcap $DATA_DIR
-
-    # Install the server's ssl certificate
-    <% if p("idp.ssl.port") != -1 %>
-        /var/vcap/jobs/idp/bin/install_idp_crt idp.crt
-    <% end %>
 
     # store pid in $PIDFILE
     echo $$ > $PIDFILE
     chown vcap:vcap $PIDFILE
 
-    cd /var/vcap/data/idp
+    cd $DATA_DIR
     exec chpst -u vcap:vcap tomcat/bin/catalina.sh run \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log

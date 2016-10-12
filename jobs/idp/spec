@@ -5,15 +5,33 @@ packages:
 - idp
 
 templates:
+  bin/pre-start: bin/pre-start
   bin/ctl: bin/ctl
   bin/monit_debugger: bin/monit_debugger
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
-  tomcat.logging.properties: config/tomcat/logging.properties
-  tomcat.server.xml.erb: config/tomcat/server.xml
+  config/tomcat/logging.properties: config/tomcat/logging.properties
+  config/tomcat/server.xml.erb: config/tomcat/server.xml
   bin/install_idp_crt: bin/install_idp_crt
-  idp.crt.erb: config/idp.crt
+  config/idp.crt.erb: config/idp.crt
+  config/shibboleth/idp.properties: config/shibboleth/idp.properties
+  config/shibboleth/services.properties: config/shibboleth/services.properties
+  config/shibboleth/attribute-filter.xml: config/shibboleth/attribute-filter.xml
+  config/shibboleth/attribute-resolver.xml: config/shibboleth/attribute-resolver.xml
+  config/shibboleth/credentials.xml: config/shibboleth/credentials.xml
+  config/shibboleth/metadata-providers.xml.erb: config/shibboleth/metadata-providers.xml
+  config/shibboleth/relying-party.xml: config/shibboleth/relying-party.xml
+  config/shibboleth/saml-nameid.xml: config/shibboleth/saml-nameid.xml
+  config/shibboleth/services.xml: config/shibboleth/services.xml
+  config/shibboleth/authn/jaas.config: config/shibboleth/authn/jaas.config
+  config/shibboleth/authn/jaas-authn-config.xml: config/shibboleth/authn/jaas-authn-config.xml
+  config/shibboleth/authn/password-authn-config.xml: config/shibboleth/authn/password-authn-config.xml
+  credentials/idp-signing.crt.erb: credentials/idp-signing.crt
+  credentials/idp-signing.key.erb: credentials/idp-signing.key
+  edit-webapp/css/main.css.erb: edit-webapp/css/main.css
+  messages/error-messages.properties.erb: messages/error-messages.properties
+  metadata/idp-metadata.xml.erb: metadata/idp-metadata.xml
 
 properties:
   # General server properties
@@ -81,3 +99,115 @@ properties:
       oyCimvs0CgUOknhTmJJSkwJBAPaI298JxTnWncC3Zu7d5QYCJXjU403Aj4LdcVeI
       6A15MzQdj5Hm82vlmpC4LzXofLjiN4E5ZLluzEw+1TjRE7c=
       -----END RSA PRIVATE KEY-----
+  idp.signing.cert:
+    description: "The server's public key for decoding signed SAML messages"
+    example: |
+      -----BEGIN CERTIFICATE-----
+      MIIDIzCCAgugAwIBAgIJAIZo894QMyHAMA0GCSqGSIb3DQEBBQUAMBUxEzARBgNV
+      BAMTCnNhbXBsZS5vcmcwHhcNMTYxMDA2MDM1NjU5WhcNMjYxMDA0MDM1NjU5WjAV
+      MRMwEQYDVQQDEwpzYW1wbGUub3JnMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
+      CgKCAQEAsISg3zhWtKNC4tYjVqqn6Kw0/e0hylhdwiGcUlRL1dE4MBMEdKUK+8hW
+      6qBs801MN6uJpu/EfocavMnoBdDpVKPW0dKD1wnvLoVTwsR6UhLLpRMyJ6FgzfKb
+      C1Z6CaDnbOUV7LsOTnez/Jcwwt5MinBjET9Kdy5KB76959VAld9+1OSF/n7Y+btz
+      zt29517KZd/Keo4oCfcRYaOqDDSG4s3AzBgUvYFnZgE651w1Jaa2Wa6dscSvpcQg
+      P4jlc7X0Lc/F6bO6sy+9YU4Fg8xi8ejAZcpPwG93CIBJCpcrMR1g2E6M7GUGGjgI
+      2wS3A44da5os/R1oiyKZCc7GYBN9fwIDAQABo3YwdDAdBgNVHQ4EFgQUyizIbZRI
+      M6Y9n+pZNGt0wNvWXoMwRQYDVR0jBD4wPIAUyizIbZRIM6Y9n+pZNGt0wNvWXoOh
+      GaQXMBUxEzARBgNVBAMTCnNhbXBsZS5vcmeCCQCGaPPeEDMhwDAMBgNVHRMEBTAD
+      AQH/MA0GCSqGSIb3DQEBBQUAA4IBAQCZJL3GiwMRb3svweon0afYn5HFfgh7RVwL
+      CsjF4lQ9eerjvybQxLADQUMfUH7vtCP+FliIGkF06uKa7aj1y+bOt5heTcRQ279i
+      fA8JemMC8cRbPNBUGZ2+rqfvlg7j/TzxRjur1uhvgqjOHWW3qUdnsd3pN+5AWwSr
+      +nL8U7y/G3mo8nWE9Ii8A9fjLUORlIdouW/6P/lVXaSfxRXlwzv9Bkq5sMoNkkFp
+      JLDu3fOYqpENzwwl6S61sYzST/CrM7IG07W0+jDVTw/X2rtLVIvYUkvIZflNNBCk
+      zO3T2WrXk/49kVvJ4zOLLc9Ppwza7p8TvPNjBTWcUYChiQmePTH0
+      -----END CERTIFICATE-----
+  idp.signing.key:
+    description: "The server's private key for signing SAML messages"
+    example: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEAsISg3zhWtKNC4tYjVqqn6Kw0/e0hylhdwiGcUlRL1dE4MBME
+      dKUK+8hW6qBs801MN6uJpu/EfocavMnoBdDpVKPW0dKD1wnvLoVTwsR6UhLLpRMy
+      J6FgzfKbC1Z6CaDnbOUV7LsOTnez/Jcwwt5MinBjET9Kdy5KB76959VAld9+1OSF
+      /n7Y+btzzt29517KZd/Keo4oCfcRYaOqDDSG4s3AzBgUvYFnZgE651w1Jaa2Wa6d
+      scSvpcQgP4jlc7X0Lc/F6bO6sy+9YU4Fg8xi8ejAZcpPwG93CIBJCpcrMR1g2E6M
+      7GUGGjgI2wS3A44da5os/R1oiyKZCc7GYBN9fwIDAQABAoIBAHwcFHw+QYBqlfml
+      tF0YSkym3+91zl9V+D4poZ6lVFi27PmoNWbKMEnNl4cKWvBKdf9iZbtxM8f+uEbq
+      8287bwMq2zzV9gq5GmmsJrN3r8WLH5ImSApjRgwnuumi2NVyQ6VmAR9cefej5HIB
+      36/z2v8vfAhBZtsbOcPuUdnyL6HvwnBKj2KO6eOsC4jlbpGGllB0PY+BO8AMLUld
+      MHtSUFaTFCx3N1QiXGkOIdWMHZ1fXFllluLpbbnn1DbN2NLKsb+hz4ak2ma8H3zS
+      xcFfI/INWHyiuYBI1FLSDwMdf3hT6uW/MrEIaS/qqUQWFgYp9VMc6GT2+enn2RFb
+      a4LzbKkCgYEA1T/9ZkYoAOQNDh/PD9Y2fetRnx8a4guFE1eEqn2OVNoqSgziaZOx
+      3c0gqbk8L5lbQmBQlkYaeZZH74RroGNpMaRi4XF9omBDOnA88uHLtphMuvD7ZWnO
+      YbMswdU7L7hGNIaJfwU17TApWFp3viUyo+GMqaykIPMv6aA8UZs/qCsCgYEA0+eN
+      /CE3tpBlN3jW9aFCelzijIQsrnvIIC0Y06dHVYvWzLk5WPzEWdPA1W2JsJI9THgS
+      BSxcnItP//WtJxqaTZOwa7spILiIxlZ+xwqfRPU0pj+vB9VboOH6KoFlooP40Snr
+      GN5iGk6Tuu/msK0+yFRYQwITVtgzYZZb939WYf0CgYAqRJq3cORw+MLVr9xc6Tq3
+      zrLI9WNgtqPT5572JBjYHL4RG2itQIcazZPR0FNro9wA1hJjFtYcj3sGsJqcmde5
+      7TlkMhiS3L22kZSjF7pHIPzkeOt7eHNdziPq75bhqIbR1nDeamv77XXke1oMqFbX
+      QNeesgd+OHWguw/5pOoDLQKBgCmzWsSwQMeDmPeWpy7FYlC0ML0YUbawk0yJs2YL
+      eEVEdKvrE3cInxdSTZNyr/L4hGmlA17TQRJpc//Z+A5G9PCpTMGWnlxbFEd7xA0l
+      cPxgCNFinO48tYBumA1/U2Hs+K0ow6QsN0AYEIhsJ4jDPySrPIdLREUF3O6qaUTG
+      YVh9AoGBALvRSv5FmjbVhj9ne30yGaEOuyyQ9j3txxpHKSV2WfsL/aQzZrnoG9zI
+      MUabRXLE60pNHPLN2UMhfc7suaJ2RIxqKMeE4ZtT4uc6iBgyAEKntTHRX4tZzN5t
+      m03BlhuLcVz8oKjp3J/8yw0hQ4oi7NtgdSwZWNvG/ar+5xLhdu7R
+      -----END RSA PRIVATE KEY-----
+  idp.entityID:
+    description: "Globally unique name for the SAML entity, usually, the base URL"
+    example: "https://my-idp.example.org"
+  idp.scope:
+    description: "The scope to assign to attribute encoded values, typically a domain name"
+  idp.passwords.sealer:
+    description: "Password for the cookie sealer"
+  idp.authn.flows:
+    description: "Regular expression matching login flows to enable"
+    example: IPAddress|Password
+    default: Password
+  idp.title:
+    description: "The title for the error view"
+    example: "Web Login Services"
+  idp.description:
+    description: "Long description of the IdP service"
+    example: "Federeated Identity Provider for example.org"
+  idp.footer:
+    description: "The footer for the IDP (General Strings)"
+    example: "This is the footer text"
+  idp.logo.alt-text:
+    description: "The alternative text for the image logo for IDP"
+    example: "Shibboleth IdP"
+  idp.logo.src:
+    description: "A dataURI encoded string of the image logo for IDP"
+    example: "path/to/logo.png"
+  root.title:
+    description: "The root title for Shibboleth"
+    example: "Shibboleth IdP"
+  root.footer:
+    description: "The root footer for Shibboleth"
+    example: "Insert your footer text here."
+  idp.metadata.providers:
+    description: "List of service providers this IdP will be serving, by id and metadata URL"
+    default: []
+    example:
+      - id: testshib
+        metadataURL: https://www.testshib.org/metadata/testshib-providers.xml
+  idp.jaas.database.dbDriver:
+    description: "JDBC driver class to use for authentication"
+    default: "org.postgresql.Driver"
+  idp.jaas.database.dbURL:
+    description: "JDBC URL of the database to use for authentication"
+    example: "jdbc:postgresql://host/database"
+  idp.jaas.database.dbUser:
+    description: "Username for the authentication database"
+  idp.jaas.database.dbPassword:
+    description: "Password for the authentication database"
+  idp.jaas.database.userTable:
+    description: "Table used to store users for authenication"
+    default: "users"
+  idp.jaas.database.userColumn:
+    description: "Column for the username in the table"
+    default: "username"
+  idp.jaas.database.passColumn:
+    description: "Column for the password in the table"
+    default: "password"
+  idp.jaas.database.useBcrypt:
+    description: "Does the password column use BCrypt for password storage"
+    default: "true"

@@ -29,13 +29,6 @@ properties:
         -----END RSA PRIVATE KEY-----
 ```
 
-You now suffix this file path to the `make_manifest` command:
-
-```
-templates/make_manifest warden my-secrets.yml
-bosh -n deploy
-```
-
 ### Generating a self-signed certificate
 
 1. Generate your private key with any passphrase
@@ -53,6 +46,43 @@ bosh -n deploy
 4. Generate self-signed certificate with 365 days expiry-time
 
 `openssl x509 -sha256 -days 365 -in server.csr -signkey server.key -out selfsigned.crt`
+
+
+### Create the SAML Signing Key and Certificate
+
+The main key underlying most IdPs is the digital signing key. This is a private key used to sign SAML messages.  The certificate is just a convenient container for the public key. In Shibboleth, or any compliant SAML system, the content of the certificate other than the key is totally ignored.
+
+1. Generate your SAML signing key and certificate
+
+`openssl req -new -x509 -nodes -newkey rsa:2048 -keyout key.pem -days 365 -subj '/CN=hostname.example.org' -out cert.pem`
+
+Add the following properties to the `my-secrets.yml` file:
+
+- `properties.idp.signing.key`: Specifies your private SAML signing key
+
+- `properties.idp.signing.cert`: Specifies your public SAML certificate.
+
+``` yaml
+---
+properties:
+  idp:
+    signing:
+      key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        YOUR KEY HERE
+        -----END RSA PRIVATE KEY-----
+      cert: |
+        -----BEGIN CERTIFICATE-----
+        YOUR CERT HERE
+        -----END CERTIFICATE-----
+```
+
+You now suffix this file path to the `make_manifest` command:
+
+```
+templates/make_manifest warden my-secrets.yml
+bosh -n deploy
+```
 
 ### Notes
 

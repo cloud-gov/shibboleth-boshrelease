@@ -12,3 +12,31 @@ director_uuid: PLACEHOLDER-DIRECTOR-UUID
 releases:
   - name: shibboleth
     version: latest
+
+properties:
+  idp:
+    sslPrivateKey: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MY PRIVATE KEY
+      -----END RSA PRIVATE KEY-----
+    sslCertificate: |
+      -----BEGIN CERTIFICATE-----
+      MY CERT
+      -----END CERTIFICATE-----
+    signing:
+      key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MY PRIVATE SAML SIGNING KEY
+        -----END RSA PRIVATE KEY-----
+      cert: |
+        -----BEGIN CERTIFICATE-----
+        MY SAML SIGNING CERT
+        -----END CERTIFICATE-----
+    entityID: https://localhost.localdomain
+    scope: localdomain
+    passwords:
+      sealer: CHANGEME
+    metadata:
+      providers:
+      - id: testshib
+        metadataURL: https://www.testshib.org/metadata/testshib-providers.xml
