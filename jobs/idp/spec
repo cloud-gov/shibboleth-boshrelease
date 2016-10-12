@@ -29,6 +29,7 @@ templates:
   config/shibboleth/authn/password-authn-config.xml: config/shibboleth/authn/password-authn-config.xml
   credentials/idp-signing.crt.erb: credentials/idp-signing.crt
   credentials/idp-signing.key.erb: credentials/idp-signing.key
+  messages/error-messages.properties.erb: messages/error-messages.properties
 
 properties:
   # General server properties
@@ -158,6 +159,24 @@ properties:
     description: "Regular expression matching login flows to enable"
     example: IPAddress|Password
     default: Password
+  idp.title:
+    description: "The title for the error view"
+    example: "Web Login Services"
+  idp.footer:
+    description: "The footer for the IDP (General Strings)"
+    example: "This is the footer text"
+  idp.logo.alt-text:
+    description: "The alternative text for the image logo for IDP"
+    example: "Shibboleth IdP"
+  idp.logo.src:
+    description: "A dataURI encoded string of the image logo for IDP"
+    example: "path/to/logo.png"
+  root.title:
+    description: "The root title for Shibboleth"
+    example: "Shibboleth IdP"
+  root.footer:
+    description: "The root footer for Shibboleth"
+    example: "Insert your footer text here."
   idp.metadata.providers:
     description: "List of service providers this IdP will be serving, by id and metadata URL"
     default: []
