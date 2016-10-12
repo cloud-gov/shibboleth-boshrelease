@@ -30,6 +30,7 @@ templates:
   credentials/idp-signing.crt.erb: credentials/idp-signing.crt
   credentials/idp-signing.key.erb: credentials/idp-signing.key
   messages/error-messages.properties.erb: messages/error-messages.properties
+  metadata/idp-metadata.xml.erb: metadata/idp-metadata.xml
 
 properties:
   # General server properties
@@ -150,7 +151,8 @@ properties:
       m03BlhuLcVz8oKjp3J/8yw0hQ4oi7NtgdSwZWNvG/ar+5xLhdu7R
       -----END RSA PRIVATE KEY-----
   idp.entityID:
-    description: "Globally unique name for the SAML entity"
+    description: "Globally unique name for the SAML entity, usually, the base URL"
+    example: "https://my-idp.example.org"
   idp.scope:
     description: "The scope to assign to attribute encoded values, typically a domain name"
   idp.passwords.sealer:
@@ -162,6 +164,9 @@ properties:
   idp.title:
     description: "The title for the error view"
     example: "Web Login Services"
+  idp.description:
+    description: "Long description of the IdP service"
+    example: "Federeated Identity Provider for example.org"
   idp.footer:
     description: "The footer for the IDP (General Strings)"
     example: "This is the footer text"
