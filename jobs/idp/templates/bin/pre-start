@@ -20,6 +20,7 @@ cp -a /var/vcap/jobs/idp/config/shibboleth/* $DATA_DIR/idp/conf
 cp -a /var/vcap/jobs/idp/credentials/* $DATA_DIR/idp/credentials
 cp -a /var/vcap/jobs/idp/messages/* $DATA_DIR/idp/messages
 cp -a /var/vcap/jobs/idp/metadata/* $DATA_DIR/idp/metadata
+cp -a /var/vcap/jobs/idp/edit-webapp/* $DATA_DIR/idp/edit-webapp
 
 # Install the server's ssl certificate
 <% if p("idp.ssl.port") != -1 %>
@@ -30,6 +31,8 @@ cp -a /var/vcap/jobs/idp/metadata/* $DATA_DIR/idp/metadata
 IDP_HOME=$DATA_DIR/idp
 pushd $IDP_HOME
 rm -f $IDP_HOME/credentials/sealer.jks
+./bin/build.sh -Didp.src.dir . -Didp.target.dir .
+cp -a $IDP_HOME/war/idp.war $DATA_DIR/tomcat/webapps/ROOT.war
 ./bin/seckeygen.sh \
     --storefile $IDP_HOME/credentials/sealer.jks \
     --storepass <%= p('idp.passwords.sealer') %> \
