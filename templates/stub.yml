@@ -14,7 +14,22 @@ releases:
     version: latest
 
 properties:
+  root:
+    title: ROOT_TITLE
+    footer: ROOT_FOOTER
   idp:
+    description: DESCRIPTION
+    jaas:
+      database:
+        dbURL: DATABASE_URL
+        dbUser: DATABASE_USER
+        dbPassword: DATABASE_URL
+    port: PORT_NUMBER
+    title: IDP_PAGE_TITLE
+    footer: IDP_PAGE_FOOTER
+    logo:
+      alt-text: IMAGE_TAG_ALT_TEXT
+      src: BASE64_IMAGE_DATA_URI
     sslPrivateKey: |
       -----BEGIN RSA PRIVATE KEY-----
       MY PRIVATE KEY
