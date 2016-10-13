@@ -20,3 +20,5 @@ my*.yml
 *.class
 .gradle
 src/tagish/build/*
+credentials.yml
+my-secrets.yml
