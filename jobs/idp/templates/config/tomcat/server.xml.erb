@@ -35,6 +35,10 @@
                connectionTimeout="20000"
                port="<%= p('idp.port') %>"
                bindOnInit="false"
+               proxyPort="443"
+               scheme="https"
+               secure="true"
+               redirectPort="<%= p('idp.ssl.port') %>"
     />
     <% end %>
 
