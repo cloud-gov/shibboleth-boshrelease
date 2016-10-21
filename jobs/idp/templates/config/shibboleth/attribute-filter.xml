@@ -6,6 +6,7 @@
 
     <!-- Release mail attribute to any SP. -->
     <AttributeFilterPolicy id="emailAsPerson">
+        <PolicyRequirementRule  xsi:type="ANY" />
         <AttributeRule attributeID="mail">
             <PermitValueRule xsi:type="ANY" />
         </AttributeRule>
