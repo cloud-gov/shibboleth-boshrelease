@@ -30,4 +30,17 @@
         </property>
     </bean>
 
+    <!--
+     - README: These are purposefully left blank.
+     -->
+    <util:list id="shibboleth.RelyingPartyOverrides">
+    </util:list>
+    <bean id="shibboleth.UnverifiedRelyingParty" parent="RelyingParty">
+        <property name="profileConfigurations">
+            <list>
+<!--                 <bean parent="SAML2.SSO" p:encryptAssertions="false" />
+ -->            </list>
+        </property>
+    </bean>
+
 </beans>
