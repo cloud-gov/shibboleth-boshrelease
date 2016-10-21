@@ -29,6 +29,8 @@ templates:
   config/shibboleth/authn/password-authn-config.xml: config/shibboleth/authn/password-authn-config.xml
   credentials/idp-signing.crt.erb: credentials/idp-signing.crt
   credentials/idp-signing.key.erb: credentials/idp-signing.key
+  credentials/idp-encryption.crt.erb: credentials/idp-encryption.crt
+  credentials/idp-encryption.key.erb: credentials/idp-encryption.key
   edit-webapp/css/main.css.erb: edit-webapp/css/main.css
   messages/error-messages.properties.erb: messages/error-messages.properties
   metadata/idp-metadata.xml.erb: metadata/idp-metadata.xml
