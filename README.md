@@ -83,24 +83,24 @@ openssl req -new \
 
 Add the following properties to the `my-secrets.yml` file:
 
+> Do **NOT** include the `-----BEGIN RSA PRIVATE KEY-----` or `-----END RSA PRIVATE KEY-----`
+> for the keys, nor `-----BEGIN CERTIFICATE-----` or `-----END CERTIFICATE-----` for
+> the certs.
+
 ```yaml
 ---
 properties:
   idp:
     signing:
       key: | # Specifies your private SAML signing key
-        -----BEGIN RSA PRIVATE KEY-----
-        -----END RSA PRIVATE KEY-----
+        YOUR KEY HERE
       cert: | # Specifies your public SAML certificate.
-        -----BEGIN CERTIFICATE-----
-        -----END CERTIFICATE-----
+        YOUR CERT HERE
     encryption:
       key: | # Specifies your private SAML encryption key
-        -----BEGIN RSA PRIVATE KEY-----
-        -----END RSA PRIVATE KEY-----
+        YOUR KEY HERE
       cert: | # Specifies your public SAML encryption certificate.
-        -----BEGIN CERTIFICATE-----
-        -----END CERTIFICATE-----
+        YOUR CERT HERE
 ```
 
 You now suffix this file path to the `make_manifest` command:
