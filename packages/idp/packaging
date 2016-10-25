@@ -51,6 +51,15 @@ pushd tagish
 cp -a build/libs/*.jar ${BOSH_INSTALL_TARGET}/idp/edit-webapp/WEB-INF/lib
 popd
 
+echo "Installing shibboleth-idp3-totp-auth jar..."
+pushd shibboleth-idp3-totp-auth
+./gradlew packageArchive
+cp -a totpauth-impl/build/libs/*.jar ${BOSH_INSTALL_TARGET}/idp/edit-webapp/WEB-INF/lib
+cp -a totpauth-impl/build/zip/conf ${BOSH_INSTALL_TARGET}/idp
+cp -a totpauth-impl/build/zip/flows ${BOSH_INSTALL_TARGET}/idp
+cp -a totpauth-impl/build/zip/views ${BOSH_INSTALL_TARGET}/idp
+popd
+
 echo "Installing shibboleth..."
 tar zxvf shibboleth3/shibboleth-identity-provider-3.2.1.tar.gz
 pushd shibboleth-identity-provider-3.2.1
