@@ -5,3 +5,4 @@ files:
 - apache-tomcat/apache-tomcat-7.0.61.tar.gz
 - shibboleth3/shibboleth-identity-provider-3.2.1.tar.gz
 - tagish/**/*
+- shibboleth-idp3-totp-auth/**/*

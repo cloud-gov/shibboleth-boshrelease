@@ -1,0 +1,3 @@
+[submodule "src/shibboleth-idp3-totp-auth"]
+	path = src/shibboleth-idp3-totp-auth
+	url = https://github.com/18F/Shibboleth-IdP3-TOTP-Auth.git
