@@ -106,7 +106,6 @@ properties:
   idp.signing.cert:
     description: "The server's public certificate for decoding signed SAML messages"
     example: |
-      -----BEGIN CERTIFICATE-----
       MIIDIzCCAgugAwIBAgIJAIZo894QMyHAMA0GCSqGSIb3DQEBBQUAMBUxEzARBgNV
       BAMTCnNhbXBsZS5vcmcwHhcNMTYxMDA2MDM1NjU5WhcNMjYxMDA0MDM1NjU5WjAV
       MRMwEQYDVQQDEwpzYW1wbGUub3JnMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
@@ -124,11 +123,9 @@ properties:
       +nL8U7y/G3mo8nWE9Ii8A9fjLUORlIdouW/6P/lVXaSfxRXlwzv9Bkq5sMoNkkFp
       JLDu3fOYqpENzwwl6S61sYzST/CrM7IG07W0+jDVTw/X2rtLVIvYUkvIZflNNBCk
       zO3T2WrXk/49kVvJ4zOLLc9Ppwza7p8TvPNjBTWcUYChiQmePTH0
-      -----END CERTIFICATE-----
   idp.signing.key:
     description: "The server's private key for signing SAML messages"
     example: |
-      -----BEGIN RSA PRIVATE KEY-----
       MIIEowIBAAKCAQEAsISg3zhWtKNC4tYjVqqn6Kw0/e0hylhdwiGcUlRL1dE4MBME
       dKUK+8hW6qBs801MN6uJpu/EfocavMnoBdDpVKPW0dKD1wnvLoVTwsR6UhLLpRMy
       J6FgzfKbC1Z6CaDnbOUV7LsOTnez/Jcwwt5MinBjET9Kdy5KB76959VAld9+1OSF
@@ -154,11 +151,9 @@ properties:
       YVh9AoGBALvRSv5FmjbVhj9ne30yGaEOuyyQ9j3txxpHKSV2WfsL/aQzZrnoG9zI
       MUabRXLE60pNHPLN2UMhfc7suaJ2RIxqKMeE4ZtT4uc6iBgyAEKntTHRX4tZzN5t
       m03BlhuLcVz8oKjp3J/8yw0hQ4oi7NtgdSwZWNvG/ar+5xLhdu7R
-      -----END RSA PRIVATE KEY-----
   idp.encryption.cert:
     description: "The server's public certifcate for encrypted SAML messages"
     example: |
-      -----BEGIN CERTIFICATE-----
       MIIDIzCCAgugAwIBAgIJAIZo894QMyHAMA0GCSqGSIb3DQEBBQUAMBUxEzARBgNV
       BAMTCnNhbXBsZS5vcmcwHhcNMTYxMDA2MDM1NjU5WhcNMjYxMDA0MDM1NjU5WjAV
       MRMwEQYDVQQDEwpzYW1wbGUub3JnMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
@@ -176,11 +171,9 @@ properties:
       +nL8U7y/G3mo8nWE9Ii8A9fjLUORlIdouW/6P/lVXaSfxRXlwzv9Bkq5sMoNkkFp
       JLDu3fOYqpENzwwl6S61sYzST/CrM7IG07W0+jDVTw/X2rtLVIvYUkvIZflNNBCk
       zO3T2WrXk/49kVvJ4zOLLc9Ppwza7p8TvPNjBTWcUYChiQmePTH0
-      -----END CERTIFICATE-----
   idp.encryption.key:
     description: "The server's private key for encrypting SAML messages"
     example: |
-      -----BEGIN RSA PRIVATE KEY-----
       MIIEowIBAAKCAQEAsISg3zhWtKNC4tYjVqqn6Kw0/e0hylhdwiGcUlRL1dE4MBME
       dKUK+8hW6qBs801MN6uJpu/EfocavMnoBdDpVKPW0dKD1wnvLoVTwsR6UhLLpRMy
       J6FgzfKbC1Z6CaDnbOUV7LsOTnez/Jcwwt5MinBjET9Kdy5KB76959VAld9+1OSF
@@ -206,7 +199,6 @@ properties:
       YVh9AoGBALvRSv5FmjbVhj9ne30yGaEOuyyQ9j3txxpHKSV2WfsL/aQzZrnoG9zI
       MUabRXLE60pNHPLN2UMhfc7suaJ2RIxqKMeE4ZtT4uc6iBgyAEKntTHRX4tZzN5t
       m03BlhuLcVz8oKjp3J/8yw0hQ4oi7NtgdSwZWNvG/ar+5xLhdu7R
-      -----END RSA PRIVATE KEY-----
   idp.entityID:
     description: "Globally unique name for the SAML entity, usually, the base URL"
     example: "https://my-idp.example.org"
