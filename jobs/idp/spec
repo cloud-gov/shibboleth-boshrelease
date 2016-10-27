@@ -262,7 +262,10 @@ properties:
     default: "true"
   idp.totp.database.userSeedTable:
     description: "Table used to store users for authenication"
-    default: "seed_table"
+    default: "totp_seed"
+  idp.totp.database.userColumn:
+    description: "Column for the user in the table"
+    default: "username"
   idp.totp.database.seedColumn:
     description: "Column for the seed in the table"
-    default: "seed_value"
+    default: "seed"
