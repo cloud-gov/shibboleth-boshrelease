@@ -263,7 +263,7 @@ properties:
   idp.totp.database.dbDriver:
     description: "JDBC driver class to use for Totp authentication"
     default: "org.postgresql.Driver"
-  idp.totp.database.dbURL
+  idp.totp.database.dbURL:
     description: "JDBC URL of the database to use for totp authentication"
     example: "jdc:postgresql://host/database"
   idp.totp.database.dbUser:
