@@ -260,6 +260,16 @@ properties:
   idp.jaas.database.useBcrypt:
     description: "Does the password column use BCrypt for password storage"
     default: "true"
+  idp.totp.database.dbDriver:
+    description: "JDBC driver class to use for Totp authentication"
+    default: "org.postgresql.Driver"
+  idp.totp.database.dbURL
+    description: "JDBC URL of the database to use for totp authentication"
+    example: "jdc:postgresql://host/database"
+  idp.totp.database.dbUser:
+    description: "Username for the totp authentication database"
+  idp.totp.database.dbPassword:
+    description: "Password for the totp authentication database"
   idp.totp.database.userSeedTable:
     description: "Table used to store users for authenication"
     default: "totp_seed"
