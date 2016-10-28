@@ -1,51 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
-  xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
 
-  default-init-method="initialize" default-destroy-method="destroy">
+	default-init-method="initialize" default-destroy-method="destroy">
 
-  <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" p:placeholderPrefix="%{"
-    p:placeholderSuffix="}" />
+	<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" p:placeholderPrefix="%{"
+		p:placeholderSuffix="}" />
 
-  <bean class="net.shibboleth.idp.profile.impl.ProfileActionBeanPostProcessor" />
-  <bean class="net.shibboleth.ext.spring.config.IdentifiableBeanPostProcessor" />
+	<bean class="net.shibboleth.idp.profile.impl.ProfileActionBeanPostProcessor" />
+	<bean class="net.shibboleth.ext.spring.config.IdentifiableBeanPostProcessor" />
 
-  <import resource="totp-authn-config.xml" />
+	<import resource="totp-authn-config.xml" />
 
-  <bean id="ExtractTotpFromForm" class="net.kvak.shibboleth.totpauth.authn.impl.ExtractTokenFromForm" scope="prototype"
-    p:httpServletRequest-ref="shibboleth.HttpServletRequest" p:tokenCodeField-ref="shibboleth.authn.tokenCodeField" />
+	<bean id="ExtractTotpFromForm" class="net.kvak.shibboleth.totpauth.authn.impl.ExtractTokenFromForm" scope="prototype"
+		p:httpServletRequest-ref="shibboleth.HttpServletRequest" p:tokenCodeField-ref="shibboleth.authn.tokenCodeField" />
 
-  <bean id="TotpTokenValidator" class="net.kvak.shibboleth.totpauth.authn.impl.TotpTokenValidator" scope="prototype"
-    p:httpServletRequest-ref="shibboleth.HttpServletRequest" p:seedFetcher-ref="shibboleth.totp.seedfetcher" p:gAuth-ref="shibboleth.totp.gAuth" />
+	<bean id="TotpTokenValidator" class="net.kvak.shibboleth.totpauth.authn.impl.TotpTokenValidator" scope="prototype"
+		p:httpServletRequest-ref="shibboleth.HttpServletRequest" p:seedFetcher-ref="shibboleth.totp.seedfetcher" p:gAuth-ref="shibboleth.totp.gAuth" />
 
-    <bean id="RegisterNewToken" class="net.kvak.shibboleth.totpauth.authn.impl.RegisterNewSeedSql" scope="prototype"
-        p:httpServletRequest-ref="shibboleth.HttpServletRequest"
-        p:gAuth-ref="shibboleth.totp.gAuth"
-        p:seedDataSource-ref="seedDataSource"
-        p:tokenCodeField-ref="shibboleth.authn.tokenCodeField"
-        p:seedDBTableName-ref="shibboleth.authn.seedDBTableName"
-        p:usernameColumnName-ref="shibboleth.authn.usernameColumnName"
-        p:seedColumnName-ref="shibboleth.authn.seedColumnName">
-    </bean>
+  <!-- For LDAP -->
+  <!--
+  <bean id="RegisterNewToken" class="net.kvak.shibboleth.totpauth.authn.impl.RegisterNewToken" scope="prototype"
+      p:httpServletRequest-ref="shibboleth.HttpServletRequest"
+      p:gAuth-ref="shibboleth.totp.gAuth"
+      p:ldapTemplate-ref="ldapTemplate"
+      p:tokenCodeField-ref="shibboleth.authn.tokenCodeField">
+      <constructor-arg ref="shibboleth.authn.seedAttribute" />
+      <constructor-arg ref="shibboleth.authn.userAttribute" />
+  </bean>
+  -->
 
-    <bean id="seedDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      <property name="driverClassName" value="<%= p('idp.totp.database.dbDriver') %>"/>
-      <property name="url" value="<%= p('idp.totp.database.dbURL') %>"/>
-      <property name="username" value="<%= p('idp.totp.database.dbUser') %>"/>
-      <property name="password" value="<%= p('idp.totp.database.dbPassword') %>"/>
-    </bean>
+  <!-- For SQL -->
+  <bean id="RegisterNewToken" class="net.kvak.shibboleth.totpauth.authn.impl.RegisterNewSeedSql" scope="prototype"
+      p:httpServletRequest-ref="shibboleth.HttpServletRequest"
+      p:gAuth-ref="shibboleth.totp.gAuth"
+      p:seedDataSource-ref="seedDataSource"
+      p:tokenCodeField-ref="shibboleth.authn.tokenCodeField">
+      <constructor-arg ref="shibboleth.authn.seedDBTableName" />
+      <constructor-arg ref="shibboleth.authn.usernameColumnName" />
+      <constructor-arg ref="shibboleth.authn.seedColumnName" />
+  </bean>
 
-    <bean id="GenerateNewToken" class="net.kvak.shibboleth.totpauth.authn.impl.GenerateNewToken" scope="prototype"
-        p:httpServletRequest-ref="shibboleth.HttpServletRequest"
-        p:gAuth-ref="shibboleth.totp.gAuth">
-    </bean>
+  <bean id="GenerateNewToken" class="net.kvak.shibboleth.totpauth.authn.impl.GenerateNewToken" scope="prototype"
+      p:httpServletRequest-ref="shibboleth.HttpServletRequest"
+      p:gAuth-ref="shibboleth.totp.gAuth">
+  </bean>
 
-  <!-- For Dummy -->
-  <bean id="shibboleth.totp.seedfetcher" class="net.kvak.shibboleth.totpauth.authn.impl.seed.DummySeedFetcher" />
+	<bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
+		<property name="url" value="LDAP_SERVER_URL" />
+		<property name="base" value="BASE_DN" />
+		<property name="userDn" value="MANAGERS DN" />
+		<property name="password" value="PASSWORD" />
+	</bean>
+
+	<bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
+		<constructor-arg ref="contextSource" />
+	</bean>
+
+  <bean id="seedDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="<%= p('idp.totp.database.dbDriver') %>"/>
+    <property name="url" value="<%= p('idp.totp.database.dbURL') %>"/>
+    <property name="username" value="<%= p('idp.totp.database.dbUser') %>"/>
+    <property name="password" value="<%= p('idp.totp.database.dbPassword') %>"/>
+  </bean>
+
+	<!-- For LDAP -->
+	<bean id="shibboleth.totp.seedfetcher" class="net.kvak.shibboleth.totpauth.authn.impl.seed.LdapSeedFetcher">
+		<constructor-arg ref="shibboleth.authn.seedAttribute" />
+		<constructor-arg ref="shibboleth.authn.userAttribute" />
+		<property name="ldapTemplate" ref="ldapTemplate" />
+	</bean>
+
+	<!-- For MongoDB -->
+	<!--bean id="shibboleth.totp.seedfetcher" class="net.kvak.shibboleth.totpauth.authn.impl.seed.MongoSeedFetcher"/-->
+	<!--
+	<bean id="shibboleth.totp.mongoConfig" class="net.kvak.shibboleth.totpauth.authn.impl.seed.MongoDB.SpringMongoConfiguration">
+		<constructor-arg ref="shibboleth.authn.mongoDbName" />
+		<constructor-arg ref="shibboleth.authn.mongoDbUrl" />
+	</bean>
+	-->
+
+	<!-- For Dummy -->
+	<!--bean id="shibboleth.totp.seedfetcher" class="net.kvak.shibboleth.totpauth.authn.impl.seed.DummySeedFetcher"/-->
 
 
 </beans>
