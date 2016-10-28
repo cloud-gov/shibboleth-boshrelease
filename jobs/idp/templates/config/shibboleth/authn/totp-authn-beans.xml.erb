@@ -22,13 +22,21 @@
   <bean id="TotpTokenValidator" class="net.kvak.shibboleth.totpauth.authn.impl.TotpTokenValidator" scope="prototype"
     p:httpServletRequest-ref="shibboleth.HttpServletRequest" p:seedFetcher-ref="shibboleth.totp.seedfetcher" p:gAuth-ref="shibboleth.totp.gAuth" />
 
-    <bean id="RegisterNewToken" class="net.kvak.shibboleth.totpauth.authn.impl.RegisterNewToken" scope="prototype"
+    <bean id="RegisterNewToken" class="net.kvak.shibboleth.totpauth.authn.impl.RegisterNewSeedSql" scope="prototype"
         p:httpServletRequest-ref="shibboleth.HttpServletRequest"
         p:gAuth-ref="shibboleth.totp.gAuth"
-        p:ldapTemplate-ref="ldapTemplate"
-        p:tokenCodeField-ref="shibboleth.authn.tokenCodeField">
-        <constructor-arg ref="shibboleth.authn.seedAttribute" />
-        <constructor-arg ref="shibboleth.authn.userAttribute" />
+        p:seedDataSource-ref="seedDataSource"
+        p:tokenCodeField-ref="shibboleth.authn.tokenCodeField"
+        p:seedDBTableName-ref="shibboleth.authn.seedDBTableName"
+        p:usernameColumnName-ref="shibboleth.authn.usernameColumnName"
+        p:seedColumnName-ref="shibboleth.authn.seedColumnName">
+    </bean>
+
+    <bean id="seedDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="<%= p('idp.totp.database.dbDriver') %>"/>
+      <property name="url" value="<%= p('idp.totp.database.dbURL') %>"/>
+      <property name="username" value="<%= p('idp.totp.database.dbUser') %>"/>
+      <property name="password" value="<%= p('idp.totp.database.dbPassword') %>"/>
     </bean>
 
     <bean id="GenerateNewToken" class="net.kvak.shibboleth.totpauth.authn.impl.GenerateNewToken" scope="prototype"
