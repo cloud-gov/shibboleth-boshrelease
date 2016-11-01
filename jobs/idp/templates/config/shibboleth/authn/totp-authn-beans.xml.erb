@@ -29,7 +29,7 @@
 
   <bean id="CheckForSeed" class="net.kvak.shibboleth.totpauth.authn.impl.CheckForSeed" scope="prototype"
       p:httpServletRequest-ref="shibboleth.HttpServletRequest"
-      p:seedfetcher-ref="shibboleth.totp.seedfetcher">
+      p:seedFetcher-ref="shibboleth.totp.seedfetcher">
   </bean>
 
   <!-- For LDAP -->
