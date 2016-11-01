@@ -60,12 +60,16 @@
   <bean id="RegisterNewToken" class="net.kvak.shibboleth.totpauth.authn.impl.RegisterNewSeedSql" scope="prototype"
       p:httpServletRequest-ref="shibboleth.HttpServletRequest"
       p:gAuth-ref="shibboleth.totp.gAuth"
-      p:seedDataSource-ref="seedDataSource"
+      p:jdbcTemplate-ref="jdbcTemplate"
       p:tokenCodeField-ref="shibboleth.authn.tokenCodeField">
       <constructor-arg ref="shibboleth.authn.seedDBTableName" />
       <constructor-arg ref="shibboleth.authn.usernameColumnName" />
       <constructor-arg ref="shibboleth.authn.seedColumnName" />
   </bean>
+
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
+    p:dataSource-ref="seedDataSource"
+  />
 
   <bean id="seedDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     <property name="driverClassName" value="<%= p('idp.totp.database.dbDriver') %>"/>
