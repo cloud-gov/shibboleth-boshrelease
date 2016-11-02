@@ -21,6 +21,6 @@
 
 	<!-- GoogleAuthenticator class to be injected to the TOTP validator. Default settings (offset 3 codes and so on) -->
 	<bean id="shibboleth.totp.gAuth" class="com.warrenstrange.googleauth.GoogleAuthenticator" />
-  <bean id="shibboleth.totp.gAuth.issuerName" class="java.lang.String" c:_0="<%= p('idp.totp.issuerName')" />
+  <bean id="shibboleth.totp.gAuth.issuerName" class="java.lang.String" c:_0="<%= p('idp.totp.issuerName') %>" />
 
 </beans>
