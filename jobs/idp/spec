@@ -260,6 +260,10 @@ properties:
   idp.jaas.database.useBcrypt:
     description: "Does the password column use BCrypt for password storage"
     default: "true"
+  idp.totp.issuerName:
+    description: "The issuer name that appears within Google Authenticator apps"
+    example: "My MFA provider"
+    default: "TOTP"
   idp.totp.database.dbDriver:
     description: "JDBC driver class to use for Totp authentication"
     default: "org.postgresql.Driver"
