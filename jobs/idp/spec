@@ -257,6 +257,9 @@ properties:
   idp.jaas.database.passColumn:
     description: "Column for the password in the table"
     default: "password"
+  idp.jaas.database.passLastModifiedColumn:
+    description: "Column for the date password last modified in the table"
+    default: "passwd_lastmodified"
   idp.jaas.database.useBcrypt:
     description: "Does the password column use BCrypt for password storage"
     default: "true"
@@ -283,3 +286,7 @@ properties:
   idp.totp.database.seedColumn:
     description: "Column for the seed in the table"
     default: "seed"
+  idp.authentication.passExpirationDays:
+    description: "The number of days after which a user's password expires"
+    default: "90"
+
