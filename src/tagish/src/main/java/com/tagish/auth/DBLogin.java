@@ -25,8 +25,10 @@ public class DBLogin extends SimpleLogin
 	protected String                userTable;
 	protected String                userColumn;
 	protected String                passColumn;
-	protected String                where;
+	protected String                passLastModifiedColumn;
+	protected String               	where;
 	protected String				useBcrypt;
+	protected String                passExpirationDays;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -45,8 +47,9 @@ public class DBLogin extends SimpleLogin
 			else
 			   con = DriverManager.getConnection(dbURL);
 
-			psu = con.prepareStatement("SELECT " + passColumn + " FROM " + userTable +
-									   " WHERE " + userColumn + "=?" + where);
+			psu = con.prepareStatement("SELECT " + passColumn + ", " + passLastModifiedColumn +
+										" FROM " + userTable +
+										" WHERE " + userColumn + "=?" + where);
 
 			/* Set the username to the statement */
 			psu.setString(1, username);
@@ -54,14 +57,19 @@ public class DBLogin extends SimpleLogin
 			if (!rsu.next()) throw new FailedLoginException("Unknown user");
 			String upwd = rsu.getString(1);
 			String tpwd = new String(password);
+			java.util.Date pwlm = rsu.getTimestamp(2);
 
 			/* Check the password */
 			if (useBcrypt.equals("false")) {
 				if (!upwd.equals(tpwd)) throw new FailedLoginException("Bad password");
 			} else {
 				if (!passwordEncoder.matches(tpwd, upwd)) throw new FailedLoginException("Bad password");
-			psu.close();
 			}
+			psu.close();
+
+			java.util.Date now = new java.util.Date();
+			if (daysBetween(now, pwlm) >= Integer.parseInt(passExpirationDays))
+				throw new CredentialExpiredException("Password has expired");
 
 			Vector p = new Vector();
 			p.add(new TypedPrincipal(username, TypedPrincipal.USER));
@@ -86,6 +94,11 @@ public class DBLogin extends SimpleLogin
 		}
 	}
 
+	private static long daysBetween(java.util.Date one, java.util.Date two) {
+		long difference = (one.getTime()-two.getTime())/86400000;
+		return Math.abs(difference);
+	}
+
 	public void initialize(Subject subject, CallbackHandler callbackHandler, Map sharedState, Map options)
 	{
 		super.initialize(subject, callbackHandler, sharedState, options);
@@ -102,6 +115,8 @@ public class DBLogin extends SimpleLogin
 		userTable    = getOption("userTable",    "User");
 		userColumn   = getOption("userColumn",   "user_name");
 		passColumn   = getOption("passColumn",   "user_passwd");
+		passLastModifiedColumn = getOption("passLastModifiedColumn",   "passwd_lastmodified");
+		passExpirationDays = getOption("passExpirationDays",   "90");
 		useBcrypt	 = getOption("useBcrypt",    "true");
 		where        = getOption("where",        "");
 		if (null != where && where.length() > 0)
