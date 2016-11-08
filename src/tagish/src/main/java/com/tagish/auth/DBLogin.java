@@ -25,10 +25,10 @@ public class DBLogin extends SimpleLogin
 	protected String                userTable;
 	protected String                userColumn;
 	protected String                passColumn;
-	protected String 				passLastModifiedColumn;
-	protected String                where;
+	protected String                passLastModifiedColumn;
+	protected String               	where;
 	protected String				useBcrypt;
-	protected String 				passExpirationDays;
+	protected String                passExpirationDays;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -68,7 +68,7 @@ public class DBLogin extends SimpleLogin
 			psu.close();
 
 			java.util.Date now = new java.util.Date();
-			if (daysBetween(now, pwlm) > Integer.parseInt(passExpirationDays))
+			if (daysBetween(now, pwlm) >= Integer.parseInt(passExpirationDays))
 				throw new CredentialExpiredException("Password has expired");
 
 			Vector p = new Vector();
