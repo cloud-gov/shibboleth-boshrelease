@@ -115,7 +115,6 @@ public class DBLogin extends SimpleLogin
 		userTable    = getOption("userTable",    "User");
 		userColumn   = getOption("userColumn",   "user_name");
 		passColumn   = getOption("passColumn",   "user_passwd");
-		passColumn   = getOption("passColumn",   "user_passwd");
 		passLastModifiedColumn = getOption("passLastModifiedColumn",   "passwd_lastmodified");
 		passExpirationDays = getOption("passExpirationDays",   "90");
 		useBcrypt	 = getOption("useBcrypt",    "true");
