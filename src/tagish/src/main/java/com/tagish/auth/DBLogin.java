@@ -149,14 +149,21 @@ public class DBLogin extends SimpleLogin
 			psu = con.prepareStatement("SELECT " + eventTypeColumn +
 										" FROM " + auditTable +
 										" WHERE " + principalIdColumn + "=?" +
-										" AND " + eventDateColumn + ">= ?");
+										" AND " + eventDateColumn + ">= ?" +
+										" ANE " + eventDateColumn + "<= ?" +
+										" ORDER BY " + eventDateColumn);
 
 			java.util.Date now = new java.util.Date();
-			java.util.Date limitDate = new java.util.Date(now.getTime() - (Integer.parseInt(failurePeriodSeconds) * 1000));
+			java.util.Date limitDate = new java.util.Date(now.getTime() -
+				(Integer.parseInt(failurePeriodSeconds) * 1000));
+			java.util.Date lockoutPeriodDate = new java.util.Date(now.getTime() +
+				(Integer.parseInt(lockoutPeriodSeconds) * 1000));
 
 			/* Set the username to the statement */
 			psu.setString(1, username);
 			psu.setTime(2, new java.sql.Time(limitDate.getTime()));
+			psu.setTime(3, new java.sql.Time(lockoutPeriodDate.getTime()));
+
 			rsu = psu.executeQuery();
 
 			while (rsu.next()) {
