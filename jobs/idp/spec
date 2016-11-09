@@ -20,6 +20,7 @@ templates:
   config/shibboleth/attribute-filter.xml: config/shibboleth/attribute-filter.xml
   config/shibboleth/attribute-resolver.xml: config/shibboleth/attribute-resolver.xml
   config/shibboleth/credentials.xml: config/shibboleth/credentials.xml
+  config/shibboleth/logback.xml: config/shibboleth/logback.xml
   config/shibboleth/metadata-providers.xml.erb: config/shibboleth/metadata-providers.xml
   config/shibboleth/relying-party.xml: config/shibboleth/relying-party.xml
   config/shibboleth/saml-nameid.xml: config/shibboleth/saml-nameid.xml

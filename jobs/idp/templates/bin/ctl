@@ -39,7 +39,7 @@ case $1 in
 
     ensure_no_more_tomcat
 
-    export JAVA_DEFINES="-DPID=$$ -Didp.home=${DATA_DIR}/idp -Dsun.net.inetaddr.ttl=60 -Dnetworkaddress.cache.ttl=60"
+    export JAVA_DEFINES="-DPID=$$ -Didp.home=${DATA_DIR}/idp -Didp.log_path=${LOG_DIR} -Dsun.net.inetaddr.ttl=60 -Dnetworkaddress.cache.ttl=60"
     export JAVA_OPTS="$JAVA_DEFINES $KEYSTORE_OPTS"
     export CATALINA_OPTS="<%= p('idp.catalina_opts') %>"
 
