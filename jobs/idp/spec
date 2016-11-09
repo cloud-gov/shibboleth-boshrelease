@@ -263,6 +263,21 @@ properties:
   idp.jaas.database.useBcrypt:
     description: "Does the password column use BCrypt for password storage"
     default: "true"
+  idp.jaas.database.auditTable:
+    description: "Name of the security event audit table (optional)"
+    default: ""
+  idp.jaas.database.principalIdColumn:
+    description: "Name of the principal id column in the audit table"
+    default: "principal_id"
+  idp.jaas.database.eventTypeIdColumn:
+    description: "Name of the event type id column in the audit table"
+    default: "event_type"
+  idp.jaas.database.originColumn:
+    description: "Name of the origincolumn in the audit table"
+    default: "origin"
+  idp.jaas.database.origin:
+    description: "Value of the origin for security audit logging"
+    default: "shibboleth"
   idp.totp.issuerName:
     description: "The issuer name that appears within Google Authenticator apps"
     example: "My MFA provider"
