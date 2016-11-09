@@ -162,7 +162,7 @@ public class DBLogin extends SimpleLogin
 		principalIdColumn = getOption("principalIdColumn",   "principal_id");
 		eventTypeColumn = getOption("eventTypeColumn",   "event_type");
 		originColumn = getOption("originColumn",   "origin");
-		origin       = getOption("origin ",   "shibboleth");
+		origin       = getOption("origin",   "shibboleth");
 		where        = getOption("where",        "");
 		if (null != where && where.length() > 0)
 			where = " AND " + where;
