@@ -6,7 +6,7 @@
     http://logback.qos.ch/manual/configuration.html#variableSubstitution
     -->
 
-    <variable name="idp.logfiles" value="{idp.path}" />
+    <variable name="idp.logfiles" value="${idp.log_path}" />
     <variable name="idp.loghistory" value="180" />
 
     <!-- Much higher performance if you operate on DEBUG. -->
