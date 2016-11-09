@@ -150,13 +150,13 @@ public class DBLogin extends SimpleLogin
 										" FROM " + auditTable +
 										" WHERE " + principalIdColumn + "=?" +
 										" AND " + eventDateColumn + ">= ?" +
-										" ANE " + eventDateColumn + "<= ?" +
+										" AND " + eventDateColumn + ">= ?" +
 										" ORDER BY " + eventDateColumn);
 
 			java.util.Date now = new java.util.Date();
 			java.util.Date limitDate = new java.util.Date(now.getTime() -
 				(Integer.parseInt(failurePeriodSeconds) * 1000));
-			java.util.Date lockoutPeriodDate = new java.util.Date(now.getTime() +
+			java.util.Date lockoutPeriodDate = new java.util.Date(now.getTime() -
 				(Integer.parseInt(lockoutPeriodSeconds) * 1000));
 
 			/* Set the username to the statement */
