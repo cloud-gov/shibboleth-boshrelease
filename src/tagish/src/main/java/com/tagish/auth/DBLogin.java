@@ -32,8 +32,12 @@ public class DBLogin extends SimpleLogin
 	protected String                auditTable;
 	protected String                principalIdColumn;
 	protected String                eventTypeColumn;
+	protected String 				eventDateColumn;
 	protected String                originColumn;
 	protected String                origin;
+	protected String 				failurePeriodSeconds;
+	protected String 				lockoutPeriodSeconds;
+	protected String 				failureCount;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -61,7 +65,7 @@ public class DBLogin extends SimpleLogin
 			rsu = psu.executeQuery();
 			if (!rsu.next()) {
 				if (!auditTable.isEmpty()) {
-					logFailedLogin(con, username, AuditEventType.UserNotFound.getCode());
+					logEvent(con, username, AuditEventType.UserNotFound);
 				}
 				throw new FailedLoginException("Unknown user");
 			}
@@ -73,24 +77,45 @@ public class DBLogin extends SimpleLogin
 			if (useBcrypt.equals("false")) {
 				if (!upwd.equals(tpwd)) {
 					if (!auditTable.isEmpty()) {
-						logFailedLogin(con, username, AuditEventType.UserAuthenticationFailure.getCode());
+						logEvent(con, username, AuditEventType.UserAuthenticationFailure);
 					}
-					throw new FailedLoginException("Bad password");
+					if (!auditTable.isEmpty() &&
+						(getFailedLoginCount(con, username, AuditEventType.UserAuthenticationFailure) >=
+							Integer.parseInt(failureCount))) {
+						throw new AccountLockedException("Account is locked");
+					} else {
+						throw new FailedLoginException("Bad password");
+					}
 				}
 			} else {
 				if (!passwordEncoder.matches(tpwd, upwd)) {
 					if (!auditTable.isEmpty()) {
-						logFailedLogin(con, username, AuditEventType.UserAuthenticationFailure.getCode());
+						logEvent(con, username, AuditEventType.UserAuthenticationFailure);
 					}
-					throw new FailedLoginException("Bad password");
+					if (!auditTable.isEmpty() &&
+						(getFailedLoginCount(con, username, AuditEventType.UserAuthenticationFailure) >=
+							Integer.parseInt(failureCount))) {
+						throw new AccountLockedException("Account is locked");
+					} else {
+						throw new FailedLoginException("Bad password");
+					}
 				}
 			}
 			psu.close();
 
 			java.util.Date now = new java.util.Date();
-			if (daysBetween(now, pwlm) >= Integer.parseInt(passExpirationDays))
+			if (intervalBetween(now, pwlm, Interval.DAYS) >= Integer.parseInt(passExpirationDays))
 				throw new CredentialExpiredException("Password has expired");
 
+			if (!auditTable.isEmpty() &&
+				(getFailedLoginCount(con, username, AuditEventType.UserAuthenticationFailure) >=
+					Integer.parseInt(failureCount))) {
+				throw new AccountLockedException("Account is locked");
+			}
+
+			if (!auditTable.isEmpty()) {
+				logEvent(con, username, AuditEventType.UserAuthenticationSuccess);
+			}
 			Vector p = new Vector();
 			p.add(new TypedPrincipal(username, TypedPrincipal.USER));
 			return p;
@@ -114,28 +139,66 @@ public class DBLogin extends SimpleLogin
 		}
 	}
 
+	private int getFailedLoginCount(Connection con, String username, AuditEventType event) {
 
-	private void logFailedLogin(Connection con, String username, int eventType) {
+		ResultSet rsu = null, rsr = null;
+		PreparedStatement psu = null;
+		int failureCount = 0;
+
+		try {
+			psu = con.prepareStatement("SELECT " + eventTypeColumn +
+										" FROM " + auditTable +
+										" WHERE " + principalIdColumn + "=?" +
+										" AND " + eventDateColumn + ">= ?");
+
+			java.util.Date now = new java.util.Date();
+			java.util.Date limitDate = new java.util.Date(now.getTime() - (Integer.parseInt(failurePeriodSeconds) * 1000));
+
+			/* Set the username to the statement */
+			psu.setString(1, username);
+			psu.setTime(2, new java.sql.Time(limitDate.getTime()));
+			rsu = psu.executeQuery();
+
+			while (rsu.next()) {
+	            if (event == AuditEventType.UserAuthenticationFailure) {
+	                failureCount++;
+	            } else if (event == AuditEventType.UserAuthenticationSuccess) {
+	                // Successful authentication occurred within last allowable
+	                // failures, so ignore
+	                break;
+	            }
+	        }
+
+	    } catch (Exception e) { }
+
+        return failureCount;
+
+    }
+
+	private void logEvent(Connection con, String username, AuditEventType eventType) {
 
 		ResultSet rsu = null, rsr = null;
 		PreparedStatement psu = null;
 
 		try {
 			psu = con.prepareStatement("INSERT INTO " + auditTable + " (" + principalIdColumn +
-										", " + eventTypeColumn + ", " + originColumn + ") " +
-										"values (?, ?, ?)");
+										", " + eventTypeColumn + ", " + eventDateColumn + ", " + originColumn + ") " +
+										"values (?, ?, ?, ?)");
 
 			/* Set the username to the statement */
+
+			java.util.Date now = new java.util.Date();
 			psu.setString(1, username);
-			psu.setInt(2, eventType);
-			psu.setString(3, origin);
+			psu.setInt(2, eventType.getCode());
+			psu.setTime(3, new java.sql.Time(now.getTime()));
+			psu.setString(4, origin);
 			rsu = psu.executeQuery();
 		} catch (Exception e) { }
 
 	}
 
-	private static long daysBetween(java.util.Date one, java.util.Date two) {
-		long difference = (one.getTime()-two.getTime())/86400000;
+	private static long intervalBetween(java.util.Date one, java.util.Date two, Interval interval) {
+		long difference = (one.getTime()-two.getTime())/interval.getMiliseconds();
 		return Math.abs(difference);
 	}
 
@@ -163,6 +226,9 @@ public class DBLogin extends SimpleLogin
 		eventTypeColumn = getOption("eventTypeColumn",   "event_type");
 		originColumn = getOption("originColumn",   "origin");
 		origin       = getOption("origin",   "shibboleth");
+		failureCount = getOption("failureCount", "5");
+		failurePeriodSeconds = getOption("failurePeriodSeconds", "1200");
+		lockoutPeriodSeconds = getOption("lockoutPeriodSeconds", "300");
 		where        = getOption("where",        "");
 		if (null != where && where.length() > 0)
 			where = " AND " + where;
@@ -173,6 +239,7 @@ public class DBLogin extends SimpleLogin
 	private enum AuditEventType {
 
 	    // Do not change the code values, as these are used in the database.
+	    UserAuthenticationSuccess(0),
 	    UserAuthenticationFailure(1),
 	    UserNotFound(2);
 
@@ -194,6 +261,32 @@ public class DBLogin extends SimpleLogin
 	    public int getCode() {
 	        return code;
 	    }
+	}
+
+	private enum Interval {
+		/* miliseconds for each interval */
+		DAYS(86400000),
+		MINUTES(60000),
+		SECONDS(1000);
+
+		private final int miliseconds;
+
+		private Interval(int miliseconds) {
+			this.miliseconds = miliseconds;
+		}
+
+		public static Interval fromMiliseconds(int miliseconds) {
+			for (Interval i : Interval.values()) {
+				if (i.getMiliseconds() == miliseconds) {
+					return i;
+				}
+			}
+			throw new IllegalArgumentException("No interval with miliseconds value " + miliseconds);
+		}
+
+		public int getMiliseconds() {
+			return miliseconds;
+		}
 	}
 
 
