@@ -305,4 +305,12 @@ properties:
   idp.authentication.passExpirationDays:
     description: "The number of days after which a user's password expires"
     default: "90"
-
+  idp.authentication.failureCount:
+    description: "Number of allowed failures before account is locked"
+    default: 5
+  idp.authentication.failurePeriodSeconds:
+    description: "Number of seconds in which lockoutAfterFailures failures must occur in order for account to be locked"
+    default: 1200
+  idp.authentication.lockoutPeriodSeconds:
+    description: "Number of seconds to lock out an account when lockoutAfterFailures failures is exceeded"
+    default: 300
