@@ -63,7 +63,6 @@ public class DBLogin extends SimpleLogin
 			/* Set the username to the statement */
 			psu.setString(1, username);
 			rsu = psu.executeQuery();
-			psu.close();
 
 			if (!rsu.next()) {
 				if (!auditTable.isEmpty()) {
@@ -74,6 +73,8 @@ public class DBLogin extends SimpleLogin
 			String upwd = rsu.getString(1);
 			String tpwd = new String(password);
 			java.util.Date pwlm = rsu.getTimestamp(2);
+
+			psu.close();
 
 			boolean validPassword = true;
 			boolean accountLocked = false;
