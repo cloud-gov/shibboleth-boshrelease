@@ -274,6 +274,7 @@ public class DBLogin extends SimpleLogin
     auditTable   = getOption("auditTable",   "");
     principalIdColumn = getOption("principalIdColumn",   "principal_id");
     eventTypeColumn = getOption("eventTypeColumn",   "event_type");
+    eventDateColumn = getOption("eventDateColumn", "created");
     originColumn = getOption("originColumn",   "origin");
     origin       = getOption("origin",   "shibboleth");
     failureCount = getOption("failureCount", "5");

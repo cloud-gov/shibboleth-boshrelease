@@ -270,9 +270,12 @@ properties:
   idp.jaas.database.principalIdColumn:
     description: "Name of the principal id column in the audit table"
     default: "principal_id"
-  idp.jaas.database.eventTypeIdColumn:
+  idp.jaas.database.eventTypeColumn:
     description: "Name of the event type id column in the audit table"
     default: "event_type"
+  idp.jaas.database.eventDateColumn:
+    description: "Name of the event date column in the audit table"
+    default: "created"
   idp.jaas.database.originColumn:
     description: "Name of the origincolumn in the audit table"
     default: "origin"
