@@ -225,16 +225,18 @@ public class DBLogin extends SimpleLogin
       PreparedStatement psu = null;
 
       try {
-        psu = con.prepareStatement("INSERT INTO " + auditTable + " (" + principalIdColumn +
+        String insert_sql = "INSERT INTO " + auditTable + " (" + principalIdColumn +
                       ", " + eventTypeColumn + ", " + eventDateColumn + ", " + originColumn + ") " +
-                      "values (?, ?, ?, ?)");
+                      "values (?, ?, ?, ?)";
+        log.info(insert_sql);
+        psu = con.prepareStatement(insert_sql);
 
         /* Set the username to the statement */
 
-        java.util.Date now = new java.util.Date();
+        java.sql.Time now = new java.sql.Time(new java.util.Date().getTime());
         psu.setString(1, username);
         psu.setInt(2, eventType.getCode());
-        psu.setTime(3, new java.sql.Time(now.getTime()));
+        psu.setTime(3, now);
         psu.setString(4, origin);
         rsu = psu.executeQuery();
       } catch (Exception e) {
