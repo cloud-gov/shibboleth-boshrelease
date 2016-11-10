@@ -162,7 +162,7 @@ public class DBLogin extends SimpleLogin
 
       /* Set the username to the statement */
       psu.setString(1, username);
-      psu.setTime(2, new java.sql.Time(limitDate.getTime()));
+      psu.setTimestamp(2, new java.sql.Timestamp(limitDate.getTime()));
       rsu = psu.executeQuery();
 
       while (rsu.next()) {
@@ -203,7 +203,7 @@ public class DBLogin extends SimpleLogin
 
       psu.setString(1, username);
       psu.setInt(2, AuditEventType.UserAccountLockedEvent.getCode());
-      psu.setTime(3, new java.sql.Time(lockoutPeriodDate.getTime()));
+      psu.setTimestamp(3, new java.sql.Timestamp(lockoutPeriodDate.getTime()));
 
       rsu = psu.executeQuery();
 
@@ -233,10 +233,10 @@ public class DBLogin extends SimpleLogin
 
         /* Set the username to the statement */
 
-        java.sql.Time now = new java.sql.Time(new java.util.Date().getTime());
+        java.sql.Timestamp now = new java.sql.Timestamp(new java.util.Date().getTime());
         psu.setString(1, username);
         psu.setInt(2, eventType.getCode());
-        psu.setTime(3, now);
+        psu.setTimestamp(3, now);
         psu.setString(4, origin);
         rsu = psu.executeQuery();
       } catch (Exception e) {
