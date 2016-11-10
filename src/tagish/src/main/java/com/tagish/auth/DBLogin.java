@@ -4,6 +4,7 @@ package com.tagish.auth;
 import java.util.Map;
 import java.util.*;
 import java.sql.*;
+import java.util.logging.*;
 import javax.security.auth.*;
 import javax.security.auth.callback.*;
 import javax.security.auth.login.*;
@@ -40,7 +41,7 @@ public class DBLogin extends SimpleLogin
 	protected String 				failureCount;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
+	private static Logger logger = Logger.getLogger("com.tagish.auth.DBLogin");
 
 	protected synchronized Vector validateUser(String username, char password[]) throws LoginException
 	{
@@ -123,11 +124,15 @@ public class DBLogin extends SimpleLogin
 		}
 		catch (ClassNotFoundException e)
 		{
-			throw new LoginException("Error reading user database (" + e.getMessage() + ")");
+			// Log the exception
+      logger.log(Level.WARNING, "TROUBLE", e);
+			throw new LoginException("Error reading user database");
 		}
 		catch (SQLException e)
 		{
-			throw new LoginException("Error reading user database (" + e.getMessage() + ")");
+			// Log the exception
+      logger.log(Level.WARNING, "TROUBLE", e);
+			throw new LoginException("Error reading user database");
 		}
 		finally
 		{
@@ -136,7 +141,10 @@ public class DBLogin extends SimpleLogin
 				if (rsr != null) rsr.close();
 				if (psu != null) psu.close();
 				if (con != null) con.close();
-			} catch (Exception e) { }
+			} catch (Exception e) {
+	      // Log the exception
+	      logger.log(Level.WARNING, "TROUBLE", e);
+			}
 		}
 	}
 
@@ -172,7 +180,10 @@ public class DBLogin extends SimpleLogin
 	            }
 	        }
 
-	    } catch (Exception e) { }
+	    } catch (Exception e) {
+	       // Log the exception
+	      logger.log(Level.WARNING, "TROUBLE", e);
+    	}
 
         return failureCount;
 
@@ -205,7 +216,10 @@ public class DBLogin extends SimpleLogin
 				accountIsLocked = true;
 	        }
 
-	    } catch (Exception e) { }
+	    } catch (Exception e) {
+	      // Log the exception
+	      logger.log(Level.WARNING, "TROUBLE", e);
+	    }
 
         return accountIsLocked;
 
@@ -229,7 +243,10 @@ public class DBLogin extends SimpleLogin
 			psu.setTime(3, new java.sql.Time(now.getTime()));
 			psu.setString(4, origin);
 			rsu = psu.executeQuery();
-		} catch (Exception e) { }
+		} catch (Exception e) {
+      // Log the exception
+      logger.log(Level.WARNING, "TROUBLE", e);
+		}
 
 	}
 
