@@ -243,7 +243,7 @@ public class DBLogin extends SimpleLogin
         logger.log(Level.WARNING, "TROUBLE", e);
       }
     } else {
-      logger.info("Username: " + username + " EventType: " + eventType.getCode(), " Origin: " + origin);
+      logger.info("Username: " + username + " EventType: " + eventType.getCode() + " Origin: " + origin);
     }
 
   }
