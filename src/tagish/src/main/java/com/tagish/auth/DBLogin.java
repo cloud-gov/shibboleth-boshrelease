@@ -63,6 +63,8 @@ public class DBLogin extends SimpleLogin
 			/* Set the username to the statement */
 			psu.setString(1, username);
 			rsu = psu.executeQuery();
+			psu.close();
+
 			if (!rsu.next()) {
 				if (!auditTable.isEmpty()) {
 					logEvent(con, username, AuditEventType.UserNotFound);
@@ -73,45 +75,43 @@ public class DBLogin extends SimpleLogin
 			String tpwd = new String(password);
 			java.util.Date pwlm = rsu.getTimestamp(2);
 
+			boolean validPassword = true;
+			boolean accountLocked = false;
 			/* Check the password */
 			if (useBcrypt.equals("false")) {
 				if (!upwd.equals(tpwd)) {
-					if (!auditTable.isEmpty()) {
-						logEvent(con, username, AuditEventType.UserAuthenticationFailure);
-					}
-					if (!auditTable.isEmpty() &&
-						(getFailedLoginCount(con, username, AuditEventType.UserAuthenticationFailure) >=
-							Integer.parseInt(failureCount))) {
-						throw new AccountLockedException("Account is locked");
-					} else {
-						throw new FailedLoginException("Bad password");
-					}
+					validPassword = false;
 				}
 			} else {
 				if (!passwordEncoder.matches(tpwd, upwd)) {
-					if (!auditTable.isEmpty()) {
-						logEvent(con, username, AuditEventType.UserAuthenticationFailure);
-					}
-					if (!auditTable.isEmpty() &&
-						(getFailedLoginCount(con, username, AuditEventType.UserAuthenticationFailure) >=
-							Integer.parseInt(failureCount))) {
-						throw new AccountLockedException("Account is locked");
-					} else {
-						throw new FailedLoginException("Bad password");
-					}
+					validPassword = false;
 				}
 			}
-			psu.close();
+
+			if (!validPassword) {
+				if (!auditTable.isEmpty()) {
+					logEvent(con, username, AuditEventType.UserAuthenticationFailure);
+					if (getFailedLoginCount(con, username, AuditEventType.UserAuthenticationFailure) >=
+							Integer.parseInt(failureCount)) {
+						logEvent(con, username, AuditEventType.UserAccountLockedEvent);
+						accountLocked = true;
+					}
+				}
+				if (accountLocked || (!auditTable.isEmpty() && accountIsLocked(con, username, AuditEventType.UserAccountLockedEvent))) {
+					throw new AccountLockedException("Account is locked");
+				} else {
+					throw new FailedLoginException("Bad password");
+				}
+			}
+
+			/* valid password, but account is still has a lock - throw exception */
+			if (!auditTable.isEmpty() && accountIsLocked(con, username, AuditEventType.UserAccountLockedEvent)) {
+				throw new AccountLockedException("Account is locked");
+			}
 
 			java.util.Date now = new java.util.Date();
 			if (intervalBetween(now, pwlm, Interval.DAYS) >= Integer.parseInt(passExpirationDays))
 				throw new CredentialExpiredException("Password has expired");
-
-			if (!auditTable.isEmpty() &&
-				(getFailedLoginCount(con, username, AuditEventType.UserAuthenticationFailure) >=
-					Integer.parseInt(failureCount))) {
-				throw new AccountLockedException("Account is locked");
-			}
 
 			if (!auditTable.isEmpty()) {
 				logEvent(con, username, AuditEventType.UserAuthenticationSuccess);
@@ -150,20 +150,15 @@ public class DBLogin extends SimpleLogin
 										" FROM " + auditTable +
 										" WHERE " + principalIdColumn + "=?" +
 										" AND " + eventDateColumn + ">= ?" +
-										" AND " + eventDateColumn + ">= ?" +
 										" ORDER BY " + eventDateColumn);
 
 			java.util.Date now = new java.util.Date();
 			java.util.Date limitDate = new java.util.Date(now.getTime() -
 				(Integer.parseInt(failurePeriodSeconds) * 1000));
-			java.util.Date lockoutPeriodDate = new java.util.Date(now.getTime() -
-				(Integer.parseInt(lockoutPeriodSeconds) * 1000));
 
 			/* Set the username to the statement */
 			psu.setString(1, username);
 			psu.setTime(2, new java.sql.Time(limitDate.getTime()));
-			psu.setTime(3, new java.sql.Time(lockoutPeriodDate.getTime()));
-
 			rsu = psu.executeQuery();
 
 			while (rsu.next()) {
@@ -179,6 +174,39 @@ public class DBLogin extends SimpleLogin
 	    } catch (Exception e) { }
 
         return failureCount;
+
+    }
+
+	private boolean accountIsLocked(Connection con, String username, AuditEventType event) {
+
+		ResultSet rsu = null, rsr = null;
+		PreparedStatement psu = null;
+		boolean accountIsLocked = false;
+
+		try {
+			psu = con.prepareStatement("SELECT " + eventTypeColumn +
+										" FROM " + auditTable +
+										" WHERE " + principalIdColumn + "=?" +
+										" AND " + eventTypeColumn + "== ?" +
+										" AND " + eventDateColumn + ">= ?");
+
+			java.util.Date now = new java.util.Date();
+			java.util.Date lockoutPeriodDate = new java.util.Date(now.getTime() -
+				(Integer.parseInt(lockoutPeriodSeconds) * 1000));
+
+			psu.setString(1, username);
+			psu.setInt(2, event.getCode());
+			psu.setTime(3, new java.sql.Time(lockoutPeriodDate.getTime()));
+
+			rsu = psu.executeQuery();
+
+			if (rsu.next()) {
+				accountIsLocked = true;
+	        }
+
+	    } catch (Exception e) { }
+
+        return accountIsLocked;
 
     }
 
@@ -248,7 +276,8 @@ public class DBLogin extends SimpleLogin
 	    // Do not change the code values, as these are used in the database.
 	    UserAuthenticationSuccess(0),
 	    UserAuthenticationFailure(1),
-	    UserNotFound(2);
+	    UserNotFound(2),
+	    UserAccountLockedEvent(36);
 
 	    private final int code;
 
