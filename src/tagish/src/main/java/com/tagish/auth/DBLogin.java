@@ -4,7 +4,8 @@ package com.tagish.auth;
 import java.util.Map;
 import java.util.*;
 import java.sql.*;
-import java.util.logging.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.security.auth.*;
 import javax.security.auth.callback.*;
 import javax.security.auth.login.*;
@@ -41,7 +42,7 @@ public class DBLogin extends SimpleLogin
   protected String                failureCount;
 
   private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-  private static Logger logger = Logger.getLogger("com.tagish.auth.DBLogin");
+  private final Logger log = LoggerFactory.getLogger(DBLogin.class);
 
   protected synchronized Vector validateUser(String username, char password[]) throws LoginException
   {
@@ -118,13 +119,13 @@ public class DBLogin extends SimpleLogin
     catch (ClassNotFoundException e)
     {
       // Log the exception
-      logger.log(Level.WARNING, "TROUBLE", e);
+      log.error("TROUBLE", e);
       throw new LoginException("Error reading user database");
     }
     catch (SQLException e)
     {
       // Log the exception
-      logger.log(Level.WARNING, "TROUBLE", e);
+      log.error("TROUBLE", e);
       throw new LoginException("Error reading user database");
     }
     finally
@@ -136,7 +137,7 @@ public class DBLogin extends SimpleLogin
         if (con != null) con.close();
       } catch (Exception e) {
         // Log the exception
-        logger.log(Level.WARNING, "TROUBLE", e);
+        log.error("TROUBLE", e);
       }
     }
   }
@@ -175,14 +176,13 @@ public class DBLogin extends SimpleLogin
         }
       }
 
-      } catch (Exception e) {
-         // Log the exception
-        logger.log(Level.WARNING, "TROUBLE", e);
-      }
-
-        return failureCount;
-
+    } catch (Exception e) {
+       // Log the exception
+      log.error("TROUBLE", e);
     }
+
+    return failureCount;
+  }
 
   private boolean accountIsLocked(Connection con, String username) {
 
@@ -209,18 +209,17 @@ public class DBLogin extends SimpleLogin
 
       if (rsu.next()) {
         accountIsLocked = true;
-          }
-
-      } catch (Exception e) {
-        // Log the exception
-        logger.log(Level.WARNING, "TROUBLE", e);
       }
 
-        return accountIsLocked;
-
+    } catch (Exception e) {
+      // Log the exception
+      log.error("TROUBLE", e);
     }
+    return accountIsLocked;
+  }
 
   private void logEvent(Connection con, String username, AuditEventType eventType) {
+    log.info("[AUDIT] Username: " + username + " EventType: " + eventType.getCode() + " Origin: " + origin);
     if (!auditTable.isEmpty()) {
       ResultSet rsu = null, rsr = null;
       PreparedStatement psu = null;
@@ -240,10 +239,8 @@ public class DBLogin extends SimpleLogin
         rsu = psu.executeQuery();
       } catch (Exception e) {
         // Log the exception
-        logger.log(Level.WARNING, "TROUBLE", e);
+        log.error("TROUBLE", e);
       }
-    } else {
-      logger.info("Username: " + username + " EventType: " + eventType.getCode() + " Origin: " + origin);
     }
 
   }
