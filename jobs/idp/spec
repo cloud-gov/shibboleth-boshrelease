@@ -37,6 +37,7 @@ templates:
   credentials/idp-encryption.key.erb: credentials/idp-encryption.key
   edit-webapp/css/main.css.erb: edit-webapp/css/main.css
   messages/error-messages.properties.erb: messages/error-messages.properties
+  messages/authn-messages.properties.erb: messages/authn-messages.properties
   metadata/idp-metadata.xml.erb: metadata/idp-metadata.xml
 
 properties:
