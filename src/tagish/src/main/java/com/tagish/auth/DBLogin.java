@@ -96,7 +96,7 @@ public class DBLogin extends SimpleLogin
           accountLocked = true;
         }
         if (accountLocked || accountIsLocked(con, username)) {
-          throw new AccountLockedException("Account is locked");
+          throw new AccountLockedException("Clients credentials have been revoked");
         } else {
           throw new FailedLoginException("Bad password");
         }
@@ -104,7 +104,7 @@ public class DBLogin extends SimpleLogin
 
       /* valid password, but account is still has a lock - throw exception */
       if (accountIsLocked(con, username)) {
-        throw new AccountLockedException("Account is locked");
+        throw new AccountLockedException("Clients credentials have been revoked");
       }
 
       java.util.Date now = new java.util.Date();
