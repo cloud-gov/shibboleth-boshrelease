@@ -55,7 +55,7 @@ bad-password.message = The password you entered was incorrect.
 
 expired-password.message = Your password has expired.
 
-account-locked.message = Your account is locked. Please try logging in again in <%= p('idp.authentication.failurePeriodSeconds') %> seconds.
+account-locked.message = Your account is locked. Please try logging in again in <%= p('idp.authentication.failurePeriodSeconds') / 60 %> minutes.
 
 spnego-unavailable.message = Your web browser doesn't support authentication with your desktop login credentials.
 spnego-unavailable.return = Cancel the attempt.
