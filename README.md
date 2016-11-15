@@ -117,7 +117,16 @@ bosh -n deploy
 
 ## Using the UAA database with shibboleth for authentication
 
-> *TODO*
+In this boshrelease, we're leveraging the UAA database to `etc...`
+
+### Schema modifications for UAA database
+
+> See cg-provision, and talk a bit about the schema
+
+### Possible issues in the future
+
+> Talk a bit about what would happen if the UAA db destroys our table and how
+> the spec covers the contingency plan.
 
 ## Usage
 
