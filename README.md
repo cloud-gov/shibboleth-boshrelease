@@ -117,7 +117,11 @@ bosh -n deploy
 
 ## Using the UAA database with shibboleth for authentication
 
-> *TODO*
+For more information on how to leverage a UAA database, please see the
+[cg-deploy-shibboleth][cg-deploy-shibboleth] documentation which leverages this
+release.
+
+[cg-deploy-shibboleth]: https://github.com/18F/cg-deploy-shibboleth "GitHub 18F cloud.gov Concourse deployment pipeline for 18F/shibboleth-boshrelease"
 
 ## Usage
 
