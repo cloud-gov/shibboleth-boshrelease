@@ -37,7 +37,7 @@
   <bean id="shibboleth.JPAStorageService.DataSource"
       class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close" lazy-init="true"
       p:driverClassName="<%= p('idp.jaas.database.dbDriver') %>"
-      p:jdbcUrl="<%= p('idp.jaas.database.dbURL') %>"
+      p:url="<%= p('idp.jaas.database.dbURL') %>"
       p:username="<%= p('idp.jaas.database.dbUser') %>"
       p:password="<%= p('idp.jaas.database.dbPassword') %>" />
 
