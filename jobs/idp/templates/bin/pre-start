@@ -35,7 +35,7 @@ rm -f $IDP_HOME/credentials/sealer.jks
 cp -a $IDP_HOME/war/idp.war $DATA_DIR/tomcat/webapps/ROOT.war
 ./bin/seckeygen.sh \
     --storefile $IDP_HOME/credentials/sealer.jks \
-    --storepass "<%= p('idp.passwords.sealer') %>" \
+    --storepass '<%= p('idp.passwords.sealer') %>' \
     --versionfile $IDP_HOME/credentials/sealer.kver \
     --alias secret
 popd
