@@ -21,6 +21,7 @@ cp -a /var/vcap/jobs/idp/credentials/* $DATA_DIR/idp/credentials
 cp -a /var/vcap/jobs/idp/messages/* $DATA_DIR/idp/messages
 cp -a /var/vcap/jobs/idp/metadata/* $DATA_DIR/idp/metadata
 cp -a /var/vcap/jobs/idp/edit-webapp/* $DATA_DIR/idp/edit-webapp
+cp -a /var/vcap/jobs/idp/views/* $DATA_DIR/idp/views
 
 # Install the server's ssl certificate
 <% if p("idp.ssl.port") != -1 %>

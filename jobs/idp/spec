@@ -40,6 +40,9 @@ templates:
   messages/error-messages.properties.erb: messages/error-messages.properties
   messages/authn-messages.properties.erb: messages/authn-messages.properties
   metadata/idp-metadata.xml.erb: metadata/idp-metadata.xml
+  views/error.vm.erb: views/error.vm
+  views/login.vm.erb: views/login.vm
+  views/logout.vm.erb: views/logout.vm
 
 properties:
   # General server properties
@@ -229,6 +232,12 @@ properties:
   idp.logo.src:
     description: "A dataURI encoded string of the image logo for IDP"
     example: "path/to/logo.png"
+  idp.login.forgotPasswordLink:
+    description: "Link to forgotten password mechanism"
+    default: "#"
+  idp.login.helpLink:
+    description: "Link to helpdesk or documentation"
+    default: "#"
   root.title:
     description: "The root title for Shibboleth"
     example: "Shibboleth IdP"
