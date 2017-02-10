@@ -27,8 +27,8 @@ idp.login.proceedEnd = to continue
 
 # Useful links
 
-idp.url.password.reset = #
-idp.url.helpdesk = #
+idp.url.password.reset = <%= p('idp.login.forgotPasswordLink') %>
+idp.url.helpdesk = <%= p('idp.login.helpLink') %>
 
 # User Preferences example messages
 
@@ -64,10 +64,8 @@ ntlm.message = Your web browser attempted to negotiate a weaker form of desktop 
 
 # Logout-related messages
 
-idp.logout.ask = Would you like to attempt to log out of all services accessed during your session? \
-                    Please select <strong>Yes</strong> or <strong>No</strong> to ensure the logout \
-                    operation completes, or wait a few seconds for Yes.
+idp.logout.ask = Would you like to logout?
 idp.logout.contactServices = If you proceed, the system will attempt to contact the following services:
-idp.logout.complete = The logout operation is complete, and no other services appear to have been accessed during this session.
+idp.logout.complete = You have been logged out.
 idp.logout.local = You elected not to log out of all the applications accessed during your session.
 idp.logout.attempt = Attempting to log out of the following services:
