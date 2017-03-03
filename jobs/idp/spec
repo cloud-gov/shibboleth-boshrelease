@@ -238,6 +238,15 @@ properties:
   idp.login.helpLink:
     description: "Link to helpdesk or documentation"
     default: "#"
+  idp.login.titleText.username:
+    description: "Title text for the username field"
+    default: "Username"
+  idp.login.titleText.password:
+    description: "Title text for the password field"
+    default: "Password"
+  idp.login.titleText.needHelp:
+    description: "Title text for the Need help? link"
+    default: "Need help?"
   root.title:
     description: "The root title for Shibboleth"
     example: "Shibboleth IdP"

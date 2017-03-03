@@ -6,8 +6,8 @@
 
 idp.login.loginTo = Login to
 
-idp.login.username = Email address
-idp.login.password = Password
+idp.login.username = <%= p('idp.login.titleText.username') %>
+idp.login.password = <%= p('idp.login.titleText.password') %>
 
 idp.login.donotcache = Don't Remember Login
 
@@ -15,7 +15,7 @@ idp.login.login = Login
 idp.login.pleasewait = Logging in, please wait...
 
 idp.login.forgotPassword = Forgot your password?
-idp.login.needHelp = Need help?
+idp.login.needHelp = <%= p('idp.login.titleText.needHelp') %>
 
 # Expiring password example messages
 
@@ -24,6 +24,10 @@ idp.login.changePassword = To create a new password now, go to
 idp.login.proceedBegin = Your login will proceed in 20 seconds or you may click
 idp.login.proceedHere = here
 idp.login.proceedEnd = to continue
+
+# Token Message Instruction Steps
+
+idp.token.message.instructionStep.one = <%= p('idp.') %>
 
 # Useful links
 
