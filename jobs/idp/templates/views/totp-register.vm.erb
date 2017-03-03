@@ -38,9 +38,9 @@ p.error {
           #end
           <form action="$flowExecutionUrl" method="post">
 
-            <li>#springMessageText("idp.token.message.instructionStep.one", "Download the Google Authenticator to your mobile device")</li>
-            <li>#springMessageText("idp.token.message.instructionStep.two", "Open the app and scan the QR-image or manually enter code: ")<strong>$sharedSecret</strong></li>
-            <li>#springMessageText("idp.token.message.instructionStep.three", "Enter the generated Token Code in the box below the QR-image and click <b>Register</b>")</li>
+            <li>#springMessageText("idp.login.token.instruction.one", "Download the Google Authenticator to your mobile device")</li>
+            <li>#springMessageText("idp.login.token.instruction.two", "Open the app and scan the QR-image or manually enter code: ")<strong>$sharedSecret</strong></li>
+            <li>#springMessageText("idp.login.token.instruction.three", "Enter the generated Token Code in the box below the QR-image and click <b>Register</b>")</li>
             <br>
             <div class="form-element-wrapper">
                <center><img src="$totpUrl" height="166" width="166"></center>
