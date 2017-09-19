@@ -13,8 +13,12 @@ else
 fi
 
 for f in java8/openjdk-*.tar.gz; do
-  [ -e "$f" ] && echo "Archive found" || echo "Archive not found"; exit 1
-  break
+  if [ -e "$f" ]; then
+    echo "Archive found"
+  else
+    echo "Archive not found"
+    exit 1
+  fi
 done
 
 echo "Extracting java archive..."
