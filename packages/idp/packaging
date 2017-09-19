@@ -35,7 +35,7 @@ export JAVA_HOME="${BOSH_INSTALL_TARGET}/jre"
 
 echo "Extracting tomcat archive..."
 mkdir -p tomcat
-tar zxvf apache-tomcat/apache-tomcat-*.tar.gz -C --strip-components=1
+tar zxvf apache-tomcat/apache-tomcat-*.tar.gz -C tomcat --strip-components=1
 if [[ $? != 0 ]] ; then
   echo "Cannot unpack Tomcat"
   exit 1
