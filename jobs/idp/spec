@@ -13,6 +13,7 @@ templates:
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
   config/tomcat/logging.properties: config/tomcat/logging.properties
   config/tomcat/server.xml.erb: config/tomcat/server.xml
+  config/tomcat/web.xml.erb: config/tomcat/web.xml
   bin/install_idp_crt: bin/install_idp_crt
   config/idp.crt.erb: config/idp.crt
   config/shibboleth/idp.properties: config/shibboleth/idp.properties
