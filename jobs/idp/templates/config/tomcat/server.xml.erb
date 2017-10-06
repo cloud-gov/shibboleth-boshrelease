@@ -71,6 +71,9 @@
             unpackWARs="true"
             autoDeploy="false"
             failCtxIfServletStartFails="true">
+        <Valve className="org.apache.catalina.valves.ErrorReportValve"
+               showReport="false"
+               showServerInfo="false" />
         <Valve className="org.apache.catalina.valves.RemoteIpValve"
                remoteIpHeader="x-forwarded-for"
                protocolHeader="<%= p('idp.ssl.protocol_header') %>"
