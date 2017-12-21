@@ -65,7 +65,7 @@ public class FileLogin extends SimpleLogin
 		}
 
 		if (users == null || !users.containsKey(username))
-		   throw new AccountExpiredException("Unknown user");
+		   throw new AccountExpiredException("Unknown email address - if you have an account, try entering your email in all lowercase letters");
 		User u = (User) users.get(username);
 		char pwd[];
 		try {
