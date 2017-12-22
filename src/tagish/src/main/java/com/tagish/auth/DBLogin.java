@@ -49,6 +49,7 @@ public class DBLogin extends SimpleLogin
     ResultSet rsu = null, rsr = null;
     Connection con = null;
     PreparedStatement psu = null;
+    username = username.toLowerCase();
 
     try
     {
@@ -148,6 +149,7 @@ public class DBLogin extends SimpleLogin
     PreparedStatement psu = null;
     int failureCount = 0;
     int event;
+    username = username.toLowerCase();
 
     try {
       psu = con.prepareStatement("SELECT " + eventTypeColumn +
@@ -189,6 +191,7 @@ public class DBLogin extends SimpleLogin
     ResultSet rsu = null, rsr = null;
     PreparedStatement psu = null;
     boolean accountIsLocked = false;
+    username = username.toLowerCase();
 
     try {
       psu = con.prepareStatement("SELECT " + eventTypeColumn +
@@ -219,6 +222,7 @@ public class DBLogin extends SimpleLogin
   }
 
   private void logEvent(Connection con, String username, AuditEventType eventType) {
+    username = username.toLowerCase();
     log.info("[AUDIT] Username: " + username + " EventType: " + eventType.getCode() + " Origin: " + origin);
     if (!auditTable.isEmpty()) {
       ResultSet rsu = null, rsr = null;
