@@ -239,6 +239,9 @@ properties:
   idp.login.helpLink:
     description: "Link to helpdesk or documentation"
     default: "#"
+  idp.login.mfaHelpLink:
+    description: "Link to MFA help or documentation"
+    default: "#"
   root.title:
     description: "The root title for Shibboleth"
     example: "Shibboleth IdP"
