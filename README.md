@@ -1,4 +1,4 @@
-# [WIP] BOSH Release for shibboleth
+# BOSH Release for Shibboleth v3
 
 This is a WIP identity provider suitable for use as a SAML provider in CloudFoundry.
 
@@ -82,10 +82,6 @@ openssl req -new \
 ```
 
 Add the following properties to the `my-secrets.yml` file:
-
-> Do **NOT** include the `-----BEGIN RSA PRIVATE KEY-----` or `-----END RSA PRIVATE KEY-----`
-> for the keys, nor `-----BEGIN CERTIFICATE-----` or `-----END CERTIFICATE-----` for
-> the certs.
 
 ```yaml
 ---
