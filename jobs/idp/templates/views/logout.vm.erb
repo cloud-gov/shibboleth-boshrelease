@@ -36,7 +36,7 @@
           <div class="column one">
 
             #if ( $logoutContext and !$logoutContext.getSessionMap().isEmpty() )
-                <p>#springMessageText("idp.logout.ask", "Would you like to logout?</p>
+                <p>#springMessageText("idp.logout.ask", "Would you like to logout?")</p>
                 <br>
 
                 <form id="propagate_form" method="POST" action="$flowExecutionUrl">
