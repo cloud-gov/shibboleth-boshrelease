@@ -69,7 +69,7 @@ public class DBLogin extends SimpleLogin
 
       if (!rsu.next()) {
         logEvent(con, username, AuditEventType.UserNotFound);
-        throw new FailedLoginException("Unknown user");
+        throw new FailedLoginException("Invalid username or password");
       }
       String upwd = rsu.getString(1);
       String tpwd = new String(password);
@@ -99,7 +99,7 @@ public class DBLogin extends SimpleLogin
         if (accountLocked || accountIsLocked(con, username)) {
           throw new AccountLockedException("Clients credentials have been revoked");
         } else {
-          throw new FailedLoginException("Bad password");
+          throw new FailedLoginException("Invalid username or password");
         }
       }
 
