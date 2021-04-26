@@ -6,7 +6,7 @@ java8/openjdk-1.8.0_141.tar.gz:
   size: 45927906
   object_id: 494fe8b9-a530-4f09-7eef-e89a98672e01
   sha: fef57709d2ca0b375a3879fe03df303afe24307f
-shibboleth3/shibboleth-identity-provider-3.2.1.tar.gz:
-  size: 39507368
-  object_id: 522d7331-92ff-4f72-903d-fc716bfc8a69
-  sha: 08cd5a13651f1c61ce35b88e9af4e0c5134c55c3
+shibboleth3/shibboleth-identity-provider-3.4.8.tar.gz:
+  size: 47855645
+  object_id: c973a918-b437-4db5-7647-58ad30b5abb2
+  sha: sha256:ad0fcd834d0c6571363d47ad6dde08fbb75cce3202c41f8c64a5b42614f95a27
