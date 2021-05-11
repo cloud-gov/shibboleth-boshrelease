@@ -13,7 +13,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.12'
 
     // For database connections
-    runtimeOnly 'org.postgresql:postgresql:9.4.1212'
+    runtimeOnly 'org.postgresql:postgresql:42.2.20'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:1.5.2'
     runtimeOnly 'mysql:mysql-connector-java:6.0.3'
     
@@ -25,12 +25,12 @@ dependencies {
 }
 
 // Copy our dependencies into build dir
-// task copyDeps(type: Copy) {
-//   from configurations.runtime
-//   into 'build/libs'
-// }
+task copyDeps(type: Copy) {
+  from configurations.runtimeClasspath
+  into 'build/libs'
+}
 
-// compileJava.dependsOn copyDeps
+compileJava.dependsOn copyDeps
 
 jar {
     baseName = 'tagish'
