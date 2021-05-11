@@ -246,6 +246,7 @@ public class DBLogin extends SimpleLogin
       } catch (Exception e) {
         // Log the exception
         log.error("TROUBLE", e);
+        e.printStackTrace();
       }
     }
 
