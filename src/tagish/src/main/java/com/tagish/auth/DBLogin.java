@@ -225,7 +225,6 @@ public class DBLogin extends SimpleLogin
     username = username.toLowerCase();
     log.info("[AUDIT] Username: " + username + " EventType: " + eventType.getCode() + " Origin: " + origin);
     if (!auditTable.isEmpty()) {
-      ResultSet rsu = null, rsr = null;
       PreparedStatement psu = null;
 
       try {
@@ -242,7 +241,7 @@ public class DBLogin extends SimpleLogin
         psu.setInt(2, eventType.getCode());
         psu.setTimestamp(3, now);
         psu.setString(4, origin);
-        rsu = psu.executeQuery();
+        psu.executeUpdate(); 
       } catch (Exception e) {
         // Log the exception
         log.error("TROUBLE", e);
