@@ -64,10 +64,26 @@
     <logger name="org.apache.catalina" level="${idp.loglevel.container:-ERROR}"/>
     <logger name="org.eclipse.jetty" level="${idp.loglevel.container:-ERROR}"/>
 
-
+    <logger name="net.kvak.shibboleth" level="DEBUG">
+        <appender-ref ref="TOTP-PLUGIN" />
+    </logger>
     <!-- =========================================================== -->
     <!-- ============== Low Level Details or Changes =============== -->
     <!-- =========================================================== -->
+
+    <appender name="TOTP-PLUGIN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${idp.logfiles}/totp-plugin.log</File>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${idp.logfiles}/idp-consent-audit-%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>${idp.loghistory:-180}</maxHistory>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>
+            <Pattern>%msg%n</Pattern>
+        </encoder>
+    </appender>
 
     <!-- Process log. -->
     <appender name="IDP_PROCESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
