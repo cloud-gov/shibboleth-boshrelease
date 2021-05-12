@@ -1,7 +1,7 @@
-apache-tomcat/apache-tomcat-7.0.108.tar.gz:
-  size: 9655294
-  object_id: 4bde49bc-e3bd-40d4-7a0c-fdcb57439c22
-  sha: sha256:6dbf37fe4362cf1bc68959ad83ffea8daddd49c89ea273238765778eb229aa6a
+apache-tomcat/apache-tomcat-8.5.65.tar.gz:
+  size: 10523269
+  object_id: 600190ee-43ec-4ec4-5193-93c2fdd36f33
+  sha: sha256:a88ad17797320ebb56ef62426074579e6611228eb0c6571b3de549d55c096270
 java8/openjdk-1.8.0_141.tar.gz:
   size: 45927906
   object_id: 494fe8b9-a530-4f09-7eef-e89a98672e01
