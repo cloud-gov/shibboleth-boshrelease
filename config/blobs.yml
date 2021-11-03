@@ -2,10 +2,10 @@ apache-tomcat/apache-tomcat-8.5.65.tar.gz:
   size: 10523269
   object_id: 600190ee-43ec-4ec4-5193-93c2fdd36f33
   sha: sha256:a88ad17797320ebb56ef62426074579e6611228eb0c6571b3de549d55c096270
-java8/openjdk-1.8.302b08.tar.gz:
-  size: 105671701
-  object_id: 3329cc8e-b78d-4f5e-7b6e-9e01c8025888
-  sha: sha256:4dc37b36aa0e441363218951e31a9d2e5fc0e18cb84b9a1396e6efcbca4cb3ed
+java8/openjdk-1.8.312b07.tar.gz:
+  size: 103312940
+  object_id: f8bd783c-30e9-4fd9-4a31-615e62d8aca4
+  sha: sha256:27be40ef7a17914dacc844fb85e37e0dfbde9626a8c9e83154a1a05ed9015e01
 shibboleth3/shibboleth-identity-provider-3.4.8.tar.gz:
   size: 47855645
   object_id: c973a918-b437-4db5-7647-58ad30b5abb2
