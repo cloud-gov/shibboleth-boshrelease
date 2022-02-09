@@ -3,6 +3,7 @@ name: idp
 
 packages:
 - idp
+- openjdk-8
 
 templates:
   bin/pre-start: bin/pre-start
