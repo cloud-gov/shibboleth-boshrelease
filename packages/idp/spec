@@ -1,7 +1,8 @@
 ---
 name: idp
+dependencies:
+- openjdk-8
 files:
-- java8/openjdk-*.tar.gz
 - apache-tomcat/apache-tomcat-*.tar.gz
 - shibboleth3/shibboleth-identity-provider-*.tar.gz
 - tagish/**/*

@@ -5,33 +5,7 @@ set -u # report the usage of uninitialized variables
 # $BOSH_COMPILE_TARGET - where this package & spec'd source files are available
 # $BOSH_INSTALL_TARGET - where you copy/install files to be included in package
 
-if [[ `uname -a` =~ "x86_64" ]] ; then
-  archive="java8/openjdk-*.tar.gz"
-else
-  echo "Only 64-bit architectures are supported."
-  exit 1
-fi
-
-for f in java8/openjdk-*.tar.gz; do
-  if [ -e "$f" ]; then
-    echo "Archive found"
-  else
-    echo "Archive not found"
-    exit 1
-  fi
-done
-
-echo "Extracting java archive..."
-mkdir jre
-tar xzf $archive -C jre
-
-if [[ -d jre/bin && `jre/bin/java -version 2>&1` =~ "OpenJDK Runtime Environment" && $? == 0 ]]; then
-  cp -a jre ${BOSH_INSTALL_TARGET}
-else
-  echo "JVM is not properly packaged"
-  exit 1
-fi
-export JAVA_HOME="${BOSH_INSTALL_TARGET}/jre"
+source /var/vcap/packages/openjdk-8/bosh/compile.env
 
 echo "Extracting tomcat archive..."
 mkdir -p tomcat
