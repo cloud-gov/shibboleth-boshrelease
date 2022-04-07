@@ -1,7 +1,7 @@
-apache-tomcat/apache-tomcat-8.5.72.tar.gz:
-  size: 10579860
-  object_id: 9bc28552-f0f9-44c5-46aa-04ecbd0fad8d
-  sha: sha256:9a28432e7eb6b06f2f310efe5ac85b2005952d46d1b27fbb2921f87ab1d3afba
+apache-tomcat/apache-tomcat-8.5.76.tar.gz:
+  size: 10577344
+  object_id: 59174c86-b821-4f60-4ffd-c08bf332418d
+  sha: sha256:84c7707db0ce495473df2efdc93da21b6d47bf25cd0a79de52e5472ff9e5f094
 java8/openjdk-1.8.312b07.tar.gz:
   size: 103312940
   object_id: f8bd783c-30e9-4fd9-4a31-615e62d8aca4
