@@ -2,7 +2,7 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-source /var/vcap/packages/openjdk-8/bosh/compile.env
+source /var/vcap/packages/openjdk-11/bosh/compile.env
 
 DATA_DIR=/var/vcap/data/idp
 

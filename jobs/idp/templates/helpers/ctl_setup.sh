@@ -75,7 +75,7 @@ then
   export PYTHONPATH=$WEBAPP_DIR/vendor/lib/python
 fi
 
-source /var/vcap/packages/openjdk-8/bosh/compile.env
+source /var/vcap/packages/openjdk-11/bosh/compile.env
 
 # setup CLASSPATH for all jars/ folders within packages
 export CLASSPATH=${CLASSPATH:-''} # default to empty
