@@ -20,7 +20,7 @@ templates:
   config/shibboleth/idp.properties: config/shibboleth/idp.properties
   config/shibboleth/services.properties: config/shibboleth/services.properties
   config/shibboleth/attribute-filter.xml: config/shibboleth/attribute-filter.xml
-  config/shibboleth/attribute-resolver.xml: config/shibboleth/attribute-resolver.xml
+  config/shibboleth/attribute-resolver.xml.erb: config/shibboleth/attribute-resolver.xml
   config/shibboleth/credentials.xml: config/shibboleth/credentials.xml
   config/shibboleth/global.xml.erb: config/shibboleth/global.xml
   config/shibboleth/logback.xml: config/shibboleth/logback.xml
@@ -34,6 +34,8 @@ templates:
   config/shibboleth/authn/general-authn.xml: config/shibboleth/authn/general-authn.xml
   config/shibboleth/authn/totp-authn-config.xml.erb: config/shibboleth/authn/totp-authn-config.xml
   config/shibboleth/authn/totp-authn-beans.xml.erb: config/shibboleth/authn/totp-authn-beans.xml
+  config/shibboleth/attributes/conf/mail.properties: config/shibboleth/attributes/conf/mail.properties 
+  config/shibboleth/attributes/conf/uid.properties: config/shibboleth/attributes/conf/uid.properties 
   credentials/idp-signing.crt.erb: credentials/idp-signing.crt
   credentials/idp-signing.key.erb: credentials/idp-signing.key
   credentials/idp-encryption.crt.erb: credentials/idp-encryption.crt

@@ -34,6 +34,7 @@ else
         # move the conf dir back
         mv ${DATA_DIR}/idp3conf ${DATA_DIR}/idp/conf
     fi
+    cp /var/vcap/packages/idp/postgresql/*.jar ${DATA_DIR}/tomcat/lib/
 fi
 
 cp -a /var/vcap/jobs/idp/config/shibboleth/* $DATA_DIR/idp/conf
@@ -42,6 +43,7 @@ cp -a /var/vcap/jobs/idp/messages/* $DATA_DIR/idp/messages
 cp -a /var/vcap/jobs/idp/metadata/* $DATA_DIR/idp/metadata
 cp -a /var/vcap/jobs/idp/edit-webapp/* $DATA_DIR/idp/edit-webapp
 cp -a /var/vcap/jobs/idp/views/* $DATA_DIR/idp/views
+
 
 # Install the server's ssl certificate
 <% if p("idp.ssl.port") != -1 %>
