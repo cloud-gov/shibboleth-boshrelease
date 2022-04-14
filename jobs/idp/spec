@@ -333,3 +333,6 @@ properties:
   idp.authentication.lockoutPeriodSeconds:
     description: "Number of seconds to lock out an account when lockoutAfterFailures failures is exceeded"
     default: 300
+  idp.use_idp4:
+    description: "Use idp version 4. If false, version 3 will be used"
+    default: false

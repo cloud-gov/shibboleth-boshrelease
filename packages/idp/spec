@@ -5,5 +5,6 @@ dependencies:
 files:
 - apache-tomcat/apache-tomcat-*.tar.gz
 - shibboleth3/shibboleth-identity-provider-*.tar.gz
+- shibboleth4/shibboleth-identity-provider-*.tar.gz
 - tagish/**/*
 - shibboleth-idp3-totp-auth/**/*

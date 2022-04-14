@@ -49,5 +49,18 @@ mkdir -p ${BOSH_INSTALL_TARGET}/idp
 popd
 cp -a ${BOSH_INSTALL_TARGET}/idp/war/idp.war ${BOSH_INSTALL_TARGET}/tomcat/webapps/ROOT.war
 
+tar zxvf shibboleth4/shibboleth-identity-provider-*.tar.gz -C shibboleth-identity-provider4 --strip-components=1
+pushd shibboleth-identity-provider4
+mkdir -p ${BOSH_INSTALL_TARGET}/idp4
+# Do a temporary install for packaging. We'll configure for real in job
+./bin/install.sh -Didp.src.dir=. \
+  -Didp.target.dir=${BOSH_INSTALL_TARGET}/idp4 \
+  -Didp.host.name=localhost.localdomain \
+  -Didp.entityID=https://localhost.localdomain/shibboleth \
+  -Didp.scope=localdomain \
+  -Didp.keystore.password=password \
+  -Didp.sealer.password=password
+popd
+
 echo "Resetting permissions..."
 chown -R vcap:vcap ${BOSH_INSTALL_TARGET}/idp
