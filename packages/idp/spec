@@ -8,3 +8,4 @@ files:
 - shibboleth4/shibboleth-identity-provider-*.tar.gz
 - tagish/**/*
 - shibboleth-idp3-totp-auth/**/*
+- postgresql/postgresql-42.3.3.jar
