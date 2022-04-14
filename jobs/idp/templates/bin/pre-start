@@ -15,11 +15,11 @@ mkdir -p $DATA_DIR
 cp -a /var/vcap/packages/idp/tomcat $DATA_DIR
 cp -a /var/vcap/jobs/idp/config/tomcat/* $DATA_DIR/tomcat/conf/
 
-if [[ -z "${USE_IDP4}"]]; then
+if [[ -z "${USE_IDP4}" ]]; then
     cp -a /var/vcap/packages/idp/idp $DATA_DIR
 else
     
-    local old_major_ver=4
+    old_major_ver=4
     if [[ -f ${DATA_DIR}/idp/bin/version.sh ]]; then
         old_major_ver=$(${DATA_DIR}/idp/bin/version.sh | cut -d. -f1)
     fi
