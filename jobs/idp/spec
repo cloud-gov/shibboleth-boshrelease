@@ -34,8 +34,8 @@ templates:
   config/shibboleth/authn/general-authn.xml: config/shibboleth/authn/general-authn.xml
   config/shibboleth/authn/totp-authn-config.xml.erb: config/shibboleth/authn/totp-authn-config.xml
   config/shibboleth/authn/totp-authn-beans.xml.erb: config/shibboleth/authn/totp-authn-beans.xml
-  config/shibboleth/attributes/conf/mail.properties: config/shibboleth/attributes/conf/mail.properties 
-  config/shibboleth/attributes/conf/uid.properties: config/shibboleth/attributes/conf/uid.properties 
+  config/shibboleth/attributes/custom/mail.properties: config/shibboleth/attributes/custom/mail.properties 
+  config/shibboleth/attributes/custom/uid.properties: config/shibboleth/attributes/custom/uid.properties 
   credentials/idp-signing.crt.erb: credentials/idp-signing.crt
   credentials/idp-signing.key.erb: credentials/idp-signing.key
   credentials/idp-encryption.crt.erb: credentials/idp-encryption.crt
