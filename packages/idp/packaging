@@ -63,5 +63,6 @@ mkdir -p ${BOSH_INSTALL_TARGET}/idp4
   -Didp.sealer.password=password
 popd
 
+cp -a postgresql ${BOSH_INSTALL_TARGET}
 echo "Resetting permissions..."
 chown -R vcap:vcap ${BOSH_INSTALL_TARGET}/idp

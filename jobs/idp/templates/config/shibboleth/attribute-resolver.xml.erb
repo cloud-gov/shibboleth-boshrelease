@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    This file is an EXAMPLE configuration file. While the configuration
-    presented in this example file is semi-functional, it isn't very
-    interesting. It is here only as a starting point for your deployment
-    process.
+<% if p('use_idp4') %>
+<AttributeResolver
+        xmlns="urn:mace:shibboleth:2.0:resolver"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:mace:shibboleth:2.0:resolver http://shibboleth.net/schema/idp/shibboleth-attribute-resolver.xsd">
 
-    Very few attribute definitions and data connectors are demonstrated,
-    and the data is derived statically from the logged-in username and a
-    static example connector.
 
-    Attribute-resolver-full.xml contains more examples of attributes,
-    encoders, and data connectors. Deployers should refer to the Shibboleth
-    documentation for a complete list of components and their options.
--->
+    <!--
+    The uid is the closest thing to a "standard" attribute
+    representing a local username.
+    -->
+    <AttributeDefinition id="uid" xsi:type="PrincipalName"/>
+
+    <!--
+    In the rest of the world, the email address is the standard identifier.
+    -->
+    <AttributeDefinition id="mail" xsi:type="Template">
+        <Template>
+          <![CDATA[
+               ${uid}
+          ]]>
+        </Template>
+        <InputAttributeDefinition ref="uid" />
+    </AttributeDefinition>
+
+</AttributeResolver>
+<% else %>
 <resolver:AttributeResolver
         xmlns:resolver="urn:mace:shibboleth:2.0:resolver"
         xmlns:pc="urn:mace:shibboleth:2.0:resolver:pc"
@@ -55,3 +68,4 @@
     </resolver:AttributeDefinition>
 
 </resolver:AttributeResolver>
+<% end %>
