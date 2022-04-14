@@ -14,7 +14,7 @@ DATA_DIR=/var/vcap/data/idp
 if [[ -f /var/vcap/jobs/idp/config/cacerts ]]; then
     export KEYSTORE="/var/vcap/jobs/idp/config/cacerts"
 else
-    export KEYSTORE="/var/vcap/packages/idp/openjdk-11/lib/security/cacerts"
+    export KEYSTORE="/var/vcap/packages/openjdk-11/lib/security/cacerts"
 fi
 
 export KEYSTORE_OPTS="-Djavax.net.ssl.trustStore=$KEYSTORE -Djavax.net.ssl.trustStoreType=JKS"
