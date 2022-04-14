@@ -35,7 +35,7 @@
     <property name="database" value="POSTGRESQL" />
   </bean>
   <bean id="shibboleth.JPAStorageService.DataSource"
-      <% if p("use_idp4") %>
+      <% if p("idp.use_idp4") %>
       class="org.apache.tomcat.jdbc.pool.DataSource"
       <% else %>
       class="org.springframework.jdbc.datasource.DriverManagerDataSource"
