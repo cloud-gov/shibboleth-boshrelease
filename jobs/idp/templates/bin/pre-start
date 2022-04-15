@@ -8,6 +8,8 @@ DATA_DIR=/var/vcap/data/idp
 
 <% if p("idp.use_idp4") %>
 USE_IDP4=yes
+<% else %>
+USE_IDP4=no
 <% end %>
 # We want to keep packages pristine, since tomcat and shibboleth is modified in place we stage them elsewhere.
 rm -rf $DATA_DIR
@@ -15,7 +17,7 @@ mkdir -p $DATA_DIR
 cp -a /var/vcap/packages/idp/tomcat $DATA_DIR
 cp -a /var/vcap/jobs/idp/config/tomcat/* $DATA_DIR/tomcat/conf/
 
-if [[ -z "${USE_IDP4}" ]]; then
+if [[ "${USE_IDP4}" = "no" ]]; then
     cp -a /var/vcap/packages/idp/idp $DATA_DIR
 else
     
