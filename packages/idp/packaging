@@ -22,6 +22,7 @@ mkdir -p ${BOSH_INSTALL_TARGET}/idp/edit-webapp/WEB-INF/lib
 mkdir -p ${BOSH_INSTALL_TARGET}/idp4/edit-webapp/WEB-INF/lib
 pushd tagish
 ./gradlew build
+cp -a build/libs/*.jar ${BOSH_INSTALL_TARGET}/idp/edit-webapp/WEB-INF/lib
 cp -a build/libs/*.jar ${BOSH_INSTALL_TARGET}/idp4/edit-webapp/WEB-INF/lib
 popd
 
