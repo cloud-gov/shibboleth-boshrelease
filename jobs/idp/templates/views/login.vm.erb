@@ -45,6 +45,7 @@
             #parse("login-error.vm")
 
             <form action="$flowExecutionUrl" method="post">
+            #parse("csrf/csrf.vm")
 
             #set ($serviceName = $rpUIContext.serviceName)
             #if ($serviceName && !$rpContext.getRelyingPartyId().contains($serviceName))
