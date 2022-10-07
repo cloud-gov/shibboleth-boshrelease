@@ -24,6 +24,7 @@ properties:
         dbURL: DATABASE_URL
         dbUser: DATABASE_USER
         dbPassword: DATABASE_URL
+        testOnBorrow: "true"
     port: PORT_NUMBER
     title: IDP_PAGE_TITLE
     footer: IDP_PAGE_FOOTER

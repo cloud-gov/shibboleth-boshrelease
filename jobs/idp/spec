@@ -263,6 +263,9 @@ properties:
   idp.jaas.database.dbURL:
     description: "JDBC URL of the database to use for authentication"
     example: "jdbc:postgresql://host/database"
+  idp.jaas.database.testOnBorrow:
+    description: "Validate the database connection before trying to use it"
+    default: true
   idp.jaas.database.dbUser:
     description: "Username for the authentication database"
   idp.jaas.database.dbPassword:
