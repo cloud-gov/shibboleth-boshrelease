@@ -61,10 +61,13 @@ public class DBLogin extends SimpleLogin
 
       psu = con.prepareStatement("SELECT " + passColumn + ", " + passLastModifiedColumn +
                     " FROM " + userTable +
-                    " WHERE " + userColumn + "=?" + where);
+                    " WHERE " + userColumn + "=?" +
+                    " AND " + originColumn + "=?" + where);
 
       /* Set the username to the statement */
       psu.setString(1, username);
+      /* Set the origin to the statement */
+      psu.setString(2, origin);
       rsu = psu.executeQuery();
 
       if (!rsu.next()) {
@@ -241,7 +244,7 @@ public class DBLogin extends SimpleLogin
         psu.setInt(2, eventType.getCode());
         psu.setTimestamp(3, now);
         psu.setString(4, origin);
-        psu.executeUpdate(); 
+        psu.executeUpdate();
       } catch (Exception e) {
         // Log the exception
         log.error("TROUBLE", e);
