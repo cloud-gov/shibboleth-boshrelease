@@ -1,0 +1,4 @@
+# Ignore reason: These files are required for the Gradle wrapper, which is used when building the project:
+# https://github.com/cloud-gov/shibboleth-boshrelease/blob/main/packages/idp/packaging#L24
+ignorePaths:
+- src/tagish/gradle/wrapper/gradle-wrapper.jar
