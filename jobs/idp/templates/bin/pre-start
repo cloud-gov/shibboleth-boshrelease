@@ -11,33 +11,20 @@ USE_IDP4=yes
 <% else %>
 USE_IDP4=no
 <% end %>
+
+if [[ "${USE_IDP4}" = "no" ]]; then
+    echo "Only shibboleth4 is supported!"
+    exit 1
+fi
+
 # We want to keep packages pristine, since tomcat and shibboleth is modified in place we stage them elsewhere.
 rm -rf $DATA_DIR
 mkdir -p $DATA_DIR
 cp -a /var/vcap/packages/idp/tomcat $DATA_DIR
 cp -a /var/vcap/jobs/idp/config/tomcat/* $DATA_DIR/tomcat/conf/
 
-if [[ "${USE_IDP4}" = "no" ]]; then
-    cp -a /var/vcap/packages/idp/idp $DATA_DIR
-else
-    
-    old_major_ver=4
-    if [[ -f ${DATA_DIR}/idp/bin/version.sh ]]; then
-        old_major_ver=$(${DATA_DIR}/idp/bin/version.sh | cut -d. -f1)
-    fi
-    if [[ "${old_major_ver}" == 3 ]]; then
-        # shibboleth says the way to upgrade is to keep _alllllll_ the conf files, even the ones we didn't touch
-        # stash conf here
-        cp -a ${DATA_DIR}/idp/conf ${DATA_DIR}/idp3conf
-    fi
-    cp -a /var/vcap/packages/idp/idp4/ $DATA_DIR/idp
-
-    if [[ "${old_major_ver}" == 3 ]]; then
-        # move the conf dir back
-        mv ${DATA_DIR}/idp3conf ${DATA_DIR}/idp/conf
-    fi
-    cp /var/vcap/packages/idp/postgresql/*.jar ${DATA_DIR}/tomcat/lib/
-fi
+cp -a /var/vcap/packages/idp/idp4/ $DATA_DIR/idp
+cp /var/vcap/packages/idp/postgresql/*.jar ${DATA_DIR}/tomcat/lib/
 
 cp -a /var/vcap/jobs/idp/config/shibboleth/* $DATA_DIR/idp/conf
 cp -a /var/vcap/jobs/idp/credentials/* $DATA_DIR/idp/credentials
