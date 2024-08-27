@@ -39,22 +39,6 @@ cp -a totpauth-impl/build/zip/flows ${BOSH_INSTALL_TARGET}/idp4
 cp -a totpauth-impl/build/zip/views ${BOSH_INSTALL_TARGET}/idp4
 popd
 
-echo "Installing shibboleth..."
-mkdir -p shibboleth-identity-provider
-tar zxvf shibboleth3/shibboleth-identity-provider-*.tar.gz -C shibboleth-identity-provider --strip-components=1
-pushd shibboleth-identity-provider
-mkdir -p ${BOSH_INSTALL_TARGET}/idp
-# Do a temporary install for packaging. We'll configure for real in job
-./bin/install.sh -Didp.src.dir=. \
-  -Didp.target.dir=${BOSH_INSTALL_TARGET}/idp \
-  -Didp.host.name=localhost.localdomain \
-  -Dentityid=https://localhost.localdomain/shibboleth \
-  -Didp.scope=localdomain \
-  -Didp.keystore.password=password \
-  -Didp.sealer.password=password
-popd
-cp -a ${BOSH_INSTALL_TARGET}/idp/war/idp.war ${BOSH_INSTALL_TARGET}/tomcat/webapps/ROOT.war
-
 mkdir -p shibboleth-identity-provider4
 tar zxvf shibboleth4/shibboleth-identity-provider-*.tar.gz -C shibboleth-identity-provider4 --strip-components=1
 pushd shibboleth-identity-provider4

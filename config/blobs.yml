@@ -6,10 +6,6 @@ postgresql/postgresql-42.3.3.jar:
   size: 1039047
   object_id: fd1a7216-0b2b-4c9a-60b3-6f5898878944
   sha: sha256:eed0604f512ba44817954de99a07e2a5470aa4bfcb481d4e63a93e0ff0e0aede
-shibboleth3/shibboleth-identity-provider-3.4.8.tar.gz:
-  size: 47855645
-  object_id: c973a918-b437-4db5-7647-58ad30b5abb2
-  sha: sha256:ad0fcd834d0c6571363d47ad6dde08fbb75cce3202c41f8c64a5b42614f95a27
 shibboleth4/shibboleth-identity-provider-4.2.1.tar.gz:
   size: 55960112
   object_id: 0b3baa4d-3773-45af-5369-25318b90fe63
