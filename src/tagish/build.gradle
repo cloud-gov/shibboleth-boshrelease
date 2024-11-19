@@ -4,23 +4,23 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = "11"
-targetCompatibility = "11"
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
     // For encryption
     implementation 'org.springframework.security:spring-security-crypto:4.1.2.RELEASE'
-    implementation 'org.slf4j:slf4j-api:2.0.12'
+    implementation 'org.slf4j:slf4j-api:1.7.12'
 
     // For database connections
     runtimeOnly 'org.postgresql:postgresql:42.2.20'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:1.5.2'
     runtimeOnly 'mysql:mysql-connector-java:6.0.3'
+    
 
-
-    testImplementation 'org.slf4j:jcl-over-slf4j:2.0.12'
-    testImplementation 'org.slf4j:jul-to-slf4j:2.0.12'
-    testImplementation 'org.slf4j:log4j-over-slf4j:2.0.12'
+    testImplementation 'org.slf4j:jcl-over-slf4j:1.7.12'
+    testImplementation 'org.slf4j:jul-to-slf4j:1.7.12'
+    testImplementation 'org.slf4j:log4j-over-slf4j:1.7.12'
     testImplementation 'junit:junit:4.12'
 }
 
