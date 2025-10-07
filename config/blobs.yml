@@ -1,7 +1,7 @@
-apache-tomcat/apache-tomcat-9.0.90.tar.gz:
-  size: 11768699
-  object_id: 996e0960-d86a-4735-7a33-c498390987f8
-  sha: sha256:318491c4be43494e6872b5277c40cac8506901d744ad09d37df62e88543f6223
+apache-tomcat/apache-tomcat-9.0.110.tar.gz:
+  size: 13036068
+  object_id: b36ef5b5-658a-49e7-42b4-32a0ed90e75c
+  sha: sha256:94393eb928ed01d58008af6925660d7a7d372661de5cef8d63c66a1aaa289618
 postgresql/postgresql-42.3.3.jar:
   size: 1039047
   object_id: fd1a7216-0b2b-4c9a-60b3-6f5898878944
