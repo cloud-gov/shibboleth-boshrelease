@@ -4,5 +4,4 @@ blobstore:
   options:
     bucket_name: cloud-gov-release-blobstore
     region: us-gov-west-1
-    host: s3-fips.us-gov-west-1.amazonaws.com
 final_name: shibboleth
