@@ -66,6 +66,13 @@
                 <input class="form-element form-field" id="password" name="j_password" type="password" value="">
               </div>
 
+              #set ($deprecationNotice = $springMacroRequestContext.getMessage("idp.login.deprecationNotice", "true"))
+              #if ($deprecationNotice == "true")
+                #set ($deprecationNoticeContent = $springMacroRequestContext.getMessage("idp.login.deprecationNoticeContent", ""))
+                <div class="form-element-wrapper deprecation-notice" role="alert">
+                  <p>$encoder.encodeForHTML($deprecationNoticeContent)</p>
+                </div>
+              #end
             #end
 
             #if ($passwordEnabled)

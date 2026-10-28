@@ -245,6 +245,12 @@ properties:
   idp.login.mfaHelpLink:
     description: "Link to MFA help or documentation"
     default: "#"
+  idp.login.deprecationNotice:
+    description: "Whether to display the deprecation notice on the login form"
+    default: true
+  idp.login.deprecationNoticeContent:
+    description: "Text displayed in the deprecation notice on the login form"
+    default: "This identity provider retires March 1, 2027. Migrate to Login.gov (PIV/CAC required) or your agency identity provider. Learn more: https://docs.cloud.gov/news/2026/10/20/decommission-notice-cloud-gov-identity-provider/"
   root.title:
     description: "The root title for Shibboleth"
     example: "Shibboleth IdP"
