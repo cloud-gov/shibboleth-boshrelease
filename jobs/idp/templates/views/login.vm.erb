@@ -70,7 +70,7 @@
               #if ($deprecationNotice == "true")
                 #set ($deprecationNoticeContent = $springMacroRequestContext.getMessage("idp.login.deprecationNoticeContent", ""))
                 <div class="form-element-wrapper deprecation-notice" role="alert">
-                  <p>$encoder.encodeForHTML($deprecationNoticeContent)</p>
+                  <p>$deprecationNoticeContent</p>
                 </div>
               #end
             #end
